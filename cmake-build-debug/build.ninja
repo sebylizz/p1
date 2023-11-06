@@ -49,11 +49,11 @@ cmake_ninja_workdir = /Users/sebastianandersen/Library/CloudStorage/OneDrive-Aal
 
 build cmake_object_order_depends_target_p1: phony || CMakeFiles/p1.dir
 
-build CMakeFiles/p1.dir/input.c.o: C_COMPILER__p1_unscanned_Debug /Users/sebastianandersen/Library/CloudStorage/OneDrive-AalborgUniversitet/Skrivebord/coding/aau$ c/p1/input.c || cmake_object_order_depends_target_p1
-  DEP_FILE = CMakeFiles/p1.dir/input.c.o.d
+build CMakeFiles/p1.dir/src/input.c.o: C_COMPILER__p1_unscanned_Debug /Users/sebastianandersen/Library/CloudStorage/OneDrive-AalborgUniversitet/Skrivebord/coding/aau$ c/p1/src/input.c || cmake_object_order_depends_target_p1
+  DEP_FILE = CMakeFiles/p1.dir/src/input.c.o.d
   FLAGS = -g -std=gnu11 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -fcolor-diagnostics
   OBJECT_DIR = CMakeFiles/p1.dir
-  OBJECT_FILE_DIR = CMakeFiles/p1.dir
+  OBJECT_FILE_DIR = CMakeFiles/p1.dir/src
   TARGET_COMPILE_PDB = CMakeFiles/p1.dir/
   TARGET_PDB = p1.pdb
 
@@ -65,7 +65,7 @@ build CMakeFiles/p1.dir/input.c.o: C_COMPILER__p1_unscanned_Debug /Users/sebasti
 #############################################
 # Link the executable p1
 
-build p1: C_EXECUTABLE_LINKER__p1_Debug CMakeFiles/p1.dir/input.c.o
+build p1: C_EXECUTABLE_LINKER__p1_Debug CMakeFiles/p1.dir/src/input.c.o
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk
   OBJECT_DIR = CMakeFiles/p1.dir
   POST_BUILD = :
