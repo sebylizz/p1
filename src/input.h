@@ -1,1 +1,1 @@
-int callback(void *, int, char **, char **);
+//int callback(void *, int, char **, char **);

@@ -1,6 +1,7 @@
 #include "../sql/sqlite3.h"
 #include "input.h"
 #include <stdio.h>
+#include <string.h>
 
 int main(void) {
 
@@ -20,11 +21,13 @@ int main(void) {
 
     char navn[40];
     printf("Indtast navn: ");
-    scanf(" %s", navn);
+    fgets(navn, 40, stdin);
+    navn[strcspn(navn, "\n")] = 0;
 
-    char *sql = ("INSERT INTO patients VALUES ('1234567890', %s, 'Cocaine', 69, 'Dagligt'", navn);
+    char sql[200];
+    sprintf(sql, "INSERT INTO patients VALUES (1234178231, '%s', 'Cocaine', 69, 'Dagligt')", navn);
 
-    rc = sqlite3_exec(db, sql, callback, 0, &err_msg);
+    rc = sqlite3_exec(db, sql, NULL, 0, &err_msg);
 
     if (rc != SQLITE_OK ) {
 
@@ -38,20 +41,6 @@ int main(void) {
     }
 
     sqlite3_close(db);
-
-    return 0;
-}
-
-int callback(void *NotUsed, int argc, char **argv,
-             char **azColName) {
-
-    NotUsed = 0;
-
-    for (int i = 0; i < argc; i++) {
-        printf("%s = %s\n", azColName[i], argv[i]);
-    }
-
-    printf("\n");
 
     return 0;
 }
