@@ -1,9 +1,6 @@
 #include "../sql/sqlite3.h"
+#include "input.h"
 #include <stdio.h>
-
-
-int callback(void *, int, char **, char **);
-
 
 int main(void) {
 
@@ -21,7 +18,11 @@ int main(void) {
         return 1;
     }
 
-    char *sql = "SELECT * FROM patients ORDER BY name";
+    char navn[40];
+    printf("Indtast navn: ");
+    scanf(" %s", navn);
+
+    char *sql = ("INSERT INTO patients VALUES ('1234567890', %s, 'Cocaine', 69, 'Dagligt'", navn);
 
     rc = sqlite3_exec(db, sql, callback, 0, &err_msg);
 
