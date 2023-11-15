@@ -25,7 +25,7 @@ int main(void) {
     navn[strcspn(navn, "\n")] = 0;
 
     char sql[200];
-    sprintf(sql, "INSERT INTO patients VALUES (1234178231, '%s', 'Cocaine', 69, 'Dagligt')", navn);
+    sprintf(sql, "INSERT INTO patients VALUES (1234176831, '%s', 'Cocaine', 69, 'Dagligt')", navn);
 
     rc = sqlite3_exec(db, sql, NULL, 0, &err_msg);
 

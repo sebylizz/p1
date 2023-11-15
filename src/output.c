@@ -4,10 +4,11 @@
 
 int main(void) {
 
+    //SQL BOILERPLATER HERUNDER
     sqlite3 *db;
     char *err_msg = 0;
 
-    int rc = sqlite3_open("sql/test.db", &db);
+    int rc = sqlite3_open("../sql/test.db", &db);
 
     if (rc != SQLITE_OK) {
 
@@ -18,7 +19,7 @@ int main(void) {
         return 1;
     }
 
-    char *sql = "SELECT * FROM patients ORDER BY name";
+    char *sql = "SELECT * FROM patients ORDER BY name"; //SQL example query
 
     rc = sqlite3_exec(db, sql, callback, 0, &err_msg);
 
@@ -38,8 +39,8 @@ int main(void) {
     return 0;
 }
 
-int callback(void *NotUsed, int argc, char **argv,
-             char **azColName) {
+//SQL print funktion
+int callback(void *NotUsed, int argc, char **argv, char **azColName) {
 
     NotUsed = 0;
 
