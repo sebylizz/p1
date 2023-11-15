@@ -5,6 +5,7 @@
 
 int main(void) {
 
+    //SQL BOILERPLATER HERUNDER
     sqlite3 *db;
     char *err_msg = 0;
 
