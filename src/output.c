@@ -8,7 +8,7 @@ int main(void) {
     sqlite3 *db;
     char *err_msg = 0;
 
-    int rc = sqlite3_open("sql/test.db", &db);
+    int rc = sqlite3_open("../sql/test.db", &db);
 
     if (rc != SQLITE_OK) {
 
