@@ -9,5 +9,5 @@ include_directories(src)
 add_executable(p1
         sql/sqlite3.c
         sql/sqlite3.h
-        src/output.c
-        src/output.h)
+        src/input.c
+        src/input.h)

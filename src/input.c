@@ -9,7 +9,7 @@ int main(void) {
     sqlite3 *db;
     char *err_msg = 0;
 
-    int rc = sqlite3_open("sql/test.db", &db);
+    int rc = sqlite3_open("../sql/p1data.db", &db);
 
     if (rc != SQLITE_OK) {
 
@@ -19,16 +19,17 @@ int main(void) {
 
         return 1;
     }
+    // SQL BOILERPLATE HEROVER
 
-    char navn[40];
-    printf("Indtast navn: ");
-    fgets(navn, 40, stdin);
-    navn[strcspn(navn, "\n")] = 0;
+    int cpr = bekraeft_cpr();
 
     char sql[200];
-    sprintf(sql, "INSERT INTO patients VALUES (1234176831, '%s', 'Cocaine', 69, 'Dagligt')", navn);
+    sprintf(sql, "SELECT name FROM patients WHERE cpr = %d", cpr);
 
-    rc = sqlite3_exec(db, sql, NULL, 0, &err_msg);
+
+
+    //IK PIL
+    //rc = sqlite3_exec(db, sql, NULL, 0, &err_msg);
 
     if (rc != SQLITE_OK ) {
 
@@ -40,8 +41,28 @@ int main(void) {
 
         return 1;
     }
-
     sqlite3_close(db);
-
     return 0;
+}
+
+int bekraeft_cpr() {
+
+    char svar;
+    int cpr;
+    char * sqlnavn = "Emil Bøsrup";
+
+    do {
+
+        printf("Indtast CPR-nummer på patienten> \n");
+        scanf(" %d", &cpr);
+
+        printf("Er patientens navn %s og CPR-nummer %d korrekt? [y/n]\n", sqlnavn, cpr);
+        scanf(" %c", &svar);
+
+    } while (svar != 'y');
+
+    printf("Patientens navn er %s og CPR-nummer %d", sqlnavn, cpr);
+
+    return cpr;
+
 }
