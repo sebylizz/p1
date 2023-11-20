@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-void bekraeft_cpr();
+int bekraeft_cpr();
 
 int main(void) {
 
@@ -10,7 +10,7 @@ return 0;
 
 }
 
-void bekraeft_cpr() {
+int bekraeft_cpr() {
 
     char svar;
     int cpr;
