@@ -11,6 +11,9 @@ int antalrecepts;
 int main(void) {
 
     int cpr = load_patient();
+    if (cpr == -1){
+        return -1;
+    }
 
     printf("Skriv r for at se aktuelle recepter\n");
 
@@ -30,24 +33,36 @@ int load_patient() {
 
     long cpr;
     char svar;
-
-    printf("Indtast CPR-nummer på patienten> \n");
-    scanf(" %ld", &cpr);
-
     char sql[100];
-    sprintf(sql, "SELECT * FROM patients WHERE cpr = %ld", cpr);
 
-    executeSQL(sql, 0);
+    do{
+        cur.cpr = 0;
+        cur.name = "NULL";
+        cur.weight = 0;
 
-    printf("Er patientens navn %s og CPR-nummer %ld korrekt? [y/n]\n", cur.name, cur.cpr);
-    scanf(" %c", &svar);
-
+        printf("Indtast CPR-nummer på patienten> \n");
+        scanf(" %ld", &cpr); 
+        sprintf(sql, "SELECT * FROM patients WHERE cpr = %ld", cpr);
+        
+        executeSQL(sql, 0);
+         
+        printf("Er patientens navn %s og CPR-nummer %ld korrekt? [y/n]\n", cur.name, cur.cpr);
+        scanf(" %c", &svar); 
+    } while (svar != 'y');
+    
     sprintf(sql, "SELECT * FROM patmed WHERE cpr = %ld", cpr);
     executeSQL(sql, 1);
+   
 
-    printf("Valgte patient er %s\n", cur.name);
-
-    return cpr;
+    if (svar == 'y'){
+        printf("Valgte patient er %s\n", cur.name);
+        return cpr;
+    }
+    
+    else if (svar == 'n' && svar !='y'){
+        printf("It appears you are stupid\n");
+        return -1;
+    }
 }
 
 int executeSQL(const char *sql, int type) {
