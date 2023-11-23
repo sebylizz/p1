@@ -116,7 +116,6 @@ int recept_callback(void *NotUsed, int argc, char **argv, char **azColName) {
     if (recepts == NULL) {
         recepts = malloc(sizeof(recept));
     } else {
-        // Extend the array size
         recepts = realloc(recepts, (antalrecepts + 1) * sizeof(recept));
     }
 
