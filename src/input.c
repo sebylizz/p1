@@ -15,23 +15,36 @@ int main(void) {
     char valg;
 
     printf("Skriv i for at oprette recept\n");
-    printf("Skriv f for at fjerne recept\n");
+    printf("Skriv s for at slette recept\n");
     printf("Skriv r for at se aktuelle recepter\n");
     printf("Skriv q for at afslutte program\n");
 
     scanf(" %c", &valg);
     if(valg == 'r'){
-        print_recepts();
+        //print_recepts
+        for(int i = 0; i < antalrecepts; i++){printf("%s, %d, %d, %s\n", recepts[i].medname, recepts[i].dosage, recepts[i].frequency, recepts[i].notes);}
     }
-    
+
+    free(recepts);
     return 0;
 }
 
 char* load_patient() {
 
+    sqlite3 *db;
+    char *err_msg = 0;
+
+    int rc = sqlite3_open("sql/p1data.db", &db);
+
+    if (rc != SQLITE_OK) {
+        fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(db));
+        sqlite3_close(db);
+        exit(EXIT_FAILURE);
+    }
+
     char cpr[11];
     char svar;
-    char sql[100];
+    char sql[250];
 
     do{
         strcpy(cur.cpr, "NULL");
@@ -42,7 +55,7 @@ char* load_patient() {
         scanf(" %s", cpr); 
         sprintf(sql, "SELECT * FROM patients WHERE cpr = '%s'", cpr);
         
-        executeSQL(sql, 0);
+        sqlite3_exec(db, sql, person_callback, 0, &err_msg);
 
         if(strcmp(cur.cpr, "NULL") == 0){
             printf("Fejlagtigt CPR-Nummer\n");
@@ -55,47 +68,13 @@ char* load_patient() {
 
     } while (svar != 'y' || strcmp(cur.cpr, "NULL") == 0);
     
-    sprintf(sql, "SELECT * FROM patmed WHERE cpr = '%s'", cpr);
-    executeSQL(sql, 1);
-   
-    if (svar == 'y'){
-        printf("Valgte patient er %s\n", cur.name);
-        return cur.cpr;
-    }
-    else{
-        return NULL;
-    }
-}
-
-int executeSQL(const char *sql, int type) {
-    sqlite3 *db;
-    char *err_msg = 0;
-
-    int rc = sqlite3_open("sql/p1data.db", &db);
-
-    if (rc != SQLITE_OK) {
-        fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(db));
-        sqlite3_close(db);
-        return 1;
-    }
-
-    if(type == 1){
-        rc = sqlite3_exec(db, sql, recept_callback, 0, &err_msg);
-    }
-    else{
-        rc = sqlite3_exec(db, sql, person_callback, 0, &err_msg);
-    }
-
-    if (rc != SQLITE_OK) {
-        fprintf(stderr, "Failed to execute SQL query\n");
-        fprintf(stderr, "SQL error: %s\n", err_msg);
-        sqlite3_free(err_msg);
-        sqlite3_close(db);
-        return 1;
-    }
+    sprintf(sql, "SELECT medicine.medicine, patmed.dosage, patmed.frequency, patmed.notes FROM patmed JOIN medicine ON medicine.id = patmed.id WHERE patmed.cpr = '%s'", cpr);
+    sqlite3_exec(db, sql, recept_callback, 0, &err_msg);
 
     sqlite3_close(db);
-    return 0;
+   
+    printf("Valgte patient er %s\n", cur.name);
+    return cur.cpr;
 }
 
 int person_callback(void *NotUsed, int argc, char **argv, char **azColName) {
@@ -121,10 +100,11 @@ int recept_callback(void *NotUsed, int argc, char **argv, char **azColName) {
         recepts = realloc(recepts, (antalrecepts + 1) * sizeof(recept));
     }
 
-    strcpy(recepts[antalrecepts].cpr, strdup(argv[0]));
-    recepts[antalrecepts].id = atoi(argv[1]);
-    recepts[antalrecepts].dosage = atoi(argv[2]);
-    recepts[antalrecepts].frequency = atoi(argv[3]);
+    strcpy(recepts[antalrecepts].medname, strdup(argv[0]));
+    recepts[antalrecepts].dosage = atoi(argv[1]);
+    recepts[antalrecepts].frequency = atoi(argv[2]);
+    if(argv[3] != NULL){strcpy(recepts[antalrecepts].notes, (strdup(argv[3])));}
+
     antalrecepts++;
 
     return 0;

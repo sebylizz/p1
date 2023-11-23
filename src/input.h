@@ -5,10 +5,10 @@ typedef struct{
 } person;
 
 typedef struct{
-    char cpr[11];
-    int id;
+    char medname[20];
     int dosage;
     int frequency;
+    char notes[200];
 } recept;
 
 int person_callback(void *, int, char **, char **);
