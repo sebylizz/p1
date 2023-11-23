@@ -3,6 +3,7 @@
 #include <string.h>
 
 void bi_medicin();
+int har_modvirkende_medicin(char* med);
 
 int main(void) {
 
@@ -23,9 +24,9 @@ void bi_medicin() {
     if (har_modvirkende_medicin(med_input)) {
 
         printf("There seems to be a possible counteracting medication, would you like to prescribe? [y/n] \n");
-        scanf(" %c", &svar);
+        scanf(" %c", &svar_bi);
 
-        if (svar == 'y') {
+        if (svar_bi == 'y') {
 
             // Kør Lukas' funktion
 
