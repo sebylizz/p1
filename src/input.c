@@ -19,9 +19,7 @@ int main(void) {
 
     scanf(" %c", &valg);
     if(valg == 'r'){
-        for(int i = 0; i < antalrecepts; i++){
-            printf("%s, %i, %i, %i\n", recepts[i].cpr, recepts[i].id, recepts[i].dosage, recepts[i].frequency);
-        }
+        print_recepts(cpr);
     }
     
     return 0;
