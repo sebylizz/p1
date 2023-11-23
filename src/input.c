@@ -14,6 +14,8 @@ int main(void) {
 
     char valg;
 
+    printf("Skriv i for at oprette recept\n");
+    printf("Skriv f for at fjerne recept\n");
     printf("Skriv r for at se aktuelle recepter\n");
     printf("Skriv q for at afslutte program\n");
 
