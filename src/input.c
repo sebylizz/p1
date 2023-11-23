@@ -1,8 +1,8 @@
-#include "../sql/sqlite3.h"
-#include "input.h"
-#include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include "input.h"
+#include "../sql/sqlite3.h"
 
 person cur;
 recept *recepts = NULL;
@@ -19,7 +19,7 @@ int main(void) {
 
     scanf(" %c", &valg);
     if(valg == 'r'){
-        print_recepts(cpr);
+        print_recepts();
     }
     
     return 0;
