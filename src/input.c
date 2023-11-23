@@ -15,15 +15,24 @@ int main(void) {
         return -1;
     }
 
-    printf("Skriv r for at se aktuelle recepter\n");
+    
 
-    char r;
-    scanf(" %c", &r);
-    if(r == 'r'){
+    char valg;
+
+
+        printf("Skriv r for at se aktuelle recepter\n");
+        printf("Skriv q for at afslutte program\n");
+
+
+    scanf(" %c", &valg);
+    if(valg == 'r'){
         int i = 0;
         for(int i = 0; i < antalrecepts; i++){
             printf("%ld, %i, %i, %i\n", recepts[i].cpr, recepts[i].id, recepts[i].dosage, recepts[i].frequency);
         }
+    }
+    else if(valg == 'q'){
+        return 1;
     }
 
     return 0;
@@ -58,11 +67,7 @@ int load_patient() {
         printf("Valgte patient er %s\n", cur.name);
         return cpr;
     }
-    
-    else if (svar == 'n' && svar !='y'){
-        printf("It appears you are stupid\n");
-        return -1;
-    }
+
 }
 
 int executeSQL(const char *sql, int type) {
