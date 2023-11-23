@@ -1,11 +1,11 @@
 typedef struct{
-    long cpr;
+    char* cpr;
     char* name;
     int weight;
 } person;
 
 typedef struct{
-    long cpr;
+    char* cpr;
     int id;
     int dosage;
     int frequency;

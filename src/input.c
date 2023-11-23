@@ -15,14 +15,10 @@ int main(void) {
         return -1;
     }
 
-    
-
     char valg;
 
-
-        printf("Skriv r for at se aktuelle recepter\n");
-        printf("Skriv q for at afslutte program\n");
-
+    printf("Skriv r for at se aktuelle recepter\n");
+    printf("Skriv q for at afslutte program\n");
 
     scanf(" %c", &valg);
     if(valg == 'r'){
@@ -31,16 +27,13 @@ int main(void) {
             printf("%ld, %i, %i, %i\n", recepts[i].cpr, recepts[i].id, recepts[i].dosage, recepts[i].frequency);
         }
     }
-    else if(valg == 'q'){
-        return 1;
-    }
-
+    
     return 0;
 }
 
 int load_patient() {
 
-    long cpr;
+    char* cpr;
     char svar;
     char sql[100];
 
@@ -50,24 +43,29 @@ int load_patient() {
         cur.weight = 0;
 
         printf("Indtast CPR-nummer på patienten> \n");
-        scanf(" %ld", &cpr); 
-        sprintf(sql, "SELECT * FROM patients WHERE cpr = %ld", cpr);
+        scanf(" %s", cpr); 
+        sprintf(sql, "SELECT * FROM patients WHERE cpr = %s", cpr);
         
         executeSQL(sql, 0);
-         
-        printf("Er patientens navn %s og CPR-nummer %ld korrekt? [y/n]\n", cur.name, cur.cpr);
-        scanf(" %c", &svar); 
-    } while (svar != 'y');
+
+        if(cur.cpr == 0){
+            printf("Fejlagtigt CPR-Nummer\n");
+        }
+
+        else{
+            printf("Er patientens navn %s og CPR-nummer %ld korrekt? [y/n]\n", cur.name, cur.cpr);
+            scanf(" %c", &svar); 
+        }
+
+    } while (svar != 'y' || cur.cpr == 0);
     
-    sprintf(sql, "SELECT * FROM patmed WHERE cpr = %ld", cpr);
+    sprintf(sql, "SELECT * FROM patmed WHERE cpr = %s", cpr);
     executeSQL(sql, 1);
    
-
     if (svar == 'y'){
         printf("Valgte patient er %s\n", cur.name);
         return cpr;
     }
-
 }
 
 int executeSQL(const char *sql, int type) {
