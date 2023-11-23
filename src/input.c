@@ -1,8 +1,8 @@
-#include "../sql/sqlite3.h"
-#include "input.h"
-#include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include "input.h"
+#include "../sql/sqlite3.h"
 
 person cur;
 recept *recepts = NULL;
@@ -10,58 +10,60 @@ int antalrecepts;
 
 int main(void) {
 
-    int cpr = load_patient();
-    if (cpr == -1){
-        return -1;
-    }
+    char* cpr = load_patient();
 
+    char valg;
+
+    printf("Skriv i for at oprette recept\n");
+    printf("Skriv f for at fjerne recept\n");
     printf("Skriv r for at se aktuelle recepter\n");
+    printf("Skriv q for at afslutte program\n");
 
-    char r;
-    scanf(" %c", &r);
-    if(r == 'r'){
-        int i = 0;
-        for(int i = 0; i < antalrecepts; i++){
-            printf("%ld, %i, %i, %i\n", recepts[i].cpr, recepts[i].id, recepts[i].dosage, recepts[i].frequency);
-        }
+    scanf(" %c", &valg);
+    if(valg == 'r'){
+        print_recepts();
     }
-
+    
     return 0;
 }
 
-int load_patient() {
+char* load_patient() {
 
-    long cpr;
+    char cpr[11];
     char svar;
     char sql[100];
 
     do{
-        cur.cpr = 0;
-        cur.name = "NULL";
+        strcpy(cur.cpr, "NULL");
+        strcpy(cur.name, "NULL");
         cur.weight = 0;
 
         printf("Indtast CPR-nummer på patienten> \n");
-        scanf(" %ld", &cpr); 
-        sprintf(sql, "SELECT * FROM patients WHERE cpr = %ld", cpr);
+        scanf(" %s", cpr); 
+        sprintf(sql, "SELECT * FROM patients WHERE cpr = '%s'", cpr);
         
         executeSQL(sql, 0);
-         
-        printf("Er patientens navn %s og CPR-nummer %ld korrekt? [y/n]\n", cur.name, cur.cpr);
-        scanf(" %c", &svar); 
-    } while (svar != 'y');
+
+        if(strcmp(cur.cpr, "NULL") == 0){
+            printf("Fejlagtigt CPR-Nummer\n");
+        }
+
+        else{
+            printf("Er patientens navn %s og CPR-nummer %s korrekt? [y/n]\n", cur.name, cur.cpr);
+            scanf(" %c", &svar); 
+        }
+
+    } while (svar != 'y' || strcmp(cur.cpr, "NULL") == 0);
     
-    sprintf(sql, "SELECT * FROM patmed WHERE cpr = %ld", cpr);
+    sprintf(sql, "SELECT * FROM patmed WHERE cpr = '%s'", cpr);
     executeSQL(sql, 1);
    
-
     if (svar == 'y'){
         printf("Valgte patient er %s\n", cur.name);
-        return cpr;
+        return cur.cpr;
     }
-    
-    else if (svar == 'n' && svar !='y'){
-        printf("It appears you are stupid\n");
-        return -1;
+    else{
+        return NULL;
     }
 }
 
@@ -100,8 +102,8 @@ int person_callback(void *NotUsed, int argc, char **argv, char **azColName) {
 
     NotUsed = 0;
 
-    cur.cpr = atol(argv[0]);
-    cur.name = strdup(argv[1]);
+    strcpy(cur.cpr, strdup(argv[0]));
+    strcpy(cur.name, strdup(argv[1]));
     cur.weight = atoi(argv[2]);
 
     printf("\n");
@@ -116,11 +118,10 @@ int recept_callback(void *NotUsed, int argc, char **argv, char **azColName) {
     if (recepts == NULL) {
         recepts = malloc(sizeof(recept));
     } else {
-        // Extend the array size
         recepts = realloc(recepts, (antalrecepts + 1) * sizeof(recept));
     }
 
-    recepts[antalrecepts].cpr = atol(argv[0]);
+    strcpy(recepts[antalrecepts].cpr, strdup(argv[0]));
     recepts[antalrecepts].id = atoi(argv[1]);
     recepts[antalrecepts].dosage = atoi(argv[2]);
     recepts[antalrecepts].frequency = atoi(argv[3]);
