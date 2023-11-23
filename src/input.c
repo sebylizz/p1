@@ -1,8 +1,8 @@
-#include "../sql/sqlite3.h"
-#include "input.h"
-#include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include "input.h"
+#include "../sql/sqlite3.h"
 
 person cur;
 recept *recepts = NULL;
@@ -14,14 +14,14 @@ int main(void) {
 
     char valg;
 
+    printf("Skriv i for at oprette recept\n");
+    printf("Skriv f for at fjerne recept\n");
     printf("Skriv r for at se aktuelle recepter\n");
     printf("Skriv q for at afslutte program\n");
 
     scanf(" %c", &valg);
     if(valg == 'r'){
-        for(int i = 0; i < antalrecepts; i++){
-            printf("%s, %i, %i, %i\n", recepts[i].cpr, recepts[i].id, recepts[i].dosage, recepts[i].frequency);
-        }
+        print_recepts();
     }
     
     return 0;
