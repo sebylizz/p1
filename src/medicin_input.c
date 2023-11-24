@@ -3,15 +3,11 @@
 #include <string.h>
 int medicin();
 
-int main(void) {
 
-    medicin();
 
-    return 0;
 
-}
 
-int medicin() {
+
     char check1, check2, check3, check5, check6, check7;
     int check4;
     int dosis, frek;
@@ -32,12 +28,13 @@ int medicin() {
         printf("What dosage of %s would you like to prescribe? (in mg)\n", med_input);
         scanf(" %d", &dosis);
 
+
         printf("Is %d mg the correct dosage of %s you wish to prescribe? [y/n]\n", dosis, med_input);
         scanf(" %c", &check2);
 
 
     } while (check2 != 'y');
-
+    char times[frek][6];
     do {
         printf("How many times a day do you wish the patient to take %s with the dosage of %d mg\n", med_input, dosis);
         scanf(" %d", &frek);
@@ -47,7 +44,7 @@ int medicin() {
         scanf(" %c", &check3);
 
     } while (check3 != 'y');
-    char times[frek][6];
+
     //bi_medicin();
     do {
         printf("1. Do you wish for the patient to take the medicine at a specific time/times?\n");
@@ -96,7 +93,14 @@ int medicin() {
         while (check7 != 'y');
     }
 
+void print_recept(dosis, frek, med_input, s_time, times) {
+    for(int i = 0; i < antalrecepts; i++){
+        printf("%ld, %i, %i, %i\n", recepts[i].cpr, recepts[i].id, recepts[i].dosage, recepts[i].frequency);
+    }
+
+    }
 
 
-}
+
+
 
