@@ -93,12 +93,15 @@ int medicin();
         while (check7 != 'y');
     }
 
+
+
+
 void print_recept(dosis, frek, med_input, s_time, times, d_time) {
     for(int i = 0; i < antalrecepts; i++){
 
         printf("CPR: %ld\n Patient navn: %s\n\n Medicin: \n - Navn: %s\n Beskrivelse: %s\n - Styrke: %d (mg)",recepts[i].cpr, cur.navn, med_input, d_time, dosis);
         printf("\n\nDosering forslag: \n - Dosis: %d (mg) %d gang(e) om dagen\n")
-        if (check4 == 1) {
+
             printf("Doserings tidspunkter: ");
             for (int i = 0; i < frek; i++){
                 printf("%s  ", times[i]);

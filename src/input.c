@@ -22,7 +22,6 @@ int main(void) {
     scanf(" %c", &valg);
     if(valg == 'r'){
         //print_recepts
-        print_recept(dosis, frek, med_input, s_time, times, d_time);
         for(int i = 0; i < antalrecepts; i++){printf("%s, %d, %d, %s\n", recepts[i].medname, recepts[i].dosage, recepts[i].frequency, recepts[i].notes);}
     }
 
@@ -53,9 +52,9 @@ char* load_patient() {
         cur.weight = 0;
 
         printf("Indtast CPR-nummer på patienten> \n");
-        scanf(" %s", cpr); 
+        scanf(" %s", cpr);
         sprintf(sql, "SELECT * FROM patients WHERE cpr = '%s'", cpr);
-        
+
         sqlite3_exec(db, sql, person_callback, 0, &err_msg);
 
         if(strcmp(cur.cpr, "NULL") == 0){
@@ -64,16 +63,16 @@ char* load_patient() {
 
         else{
             printf("Er patientens navn %s og CPR-nummer %s korrekt? [y/n]\n", cur.name, cur.cpr);
-            scanf(" %c", &svar); 
+            scanf(" %c", &svar);
         }
 
     } while (svar != 'y' || strcmp(cur.cpr, "NULL") == 0);
-    
+
     sprintf(sql, "SELECT medicine.medicine, patmed.dosage, patmed.frequency, patmed.notes FROM patmed JOIN medicine ON medicine.id = patmed.id WHERE patmed.cpr = '%s'", cpr);
     sqlite3_exec(db, sql, recept_callback, 0, &err_msg);
 
     sqlite3_close(db);
-   
+
     printf("Valgte patient er %s\n", cur.name);
     return cur.cpr;
 }
@@ -109,22 +108,4 @@ int recept_callback(void *NotUsed, int argc, char **argv, char **azColName) {
     antalrecepts++;
 
     return 0;
-}
-
-char* print_recept(dosis, frek, med_input, s_time, times, d_time) {
-    for(int i = 0; i < antalrecepts; i++){
-
-        printf("CPR: %ld\n Patient navn: %s\n\n Medicin: \n - Navn: %s\n Beskrivelse: %s\n - Styrke: %d (mg)", recepts[i].cpr, cur.navn, med_input, d_time, dosis);
-        printf("\n\nDosering forslag: \n - Dosis: %d (mg) %d gang(e) om dagen\n")
-
-        printf("Doserings tidspunkter: ");
-        for (int i = 0; i < frek; i++){
-        printf("%s  ", times[i]);
-        }
-
-            printf("%s\n\n\n", d_time);
-        }
-        printf("%ld, %i, %i, %i\n", recepts[i].cpr, recepts[i].id, recepts[i].dosage, recepts[i].frequency);
-    }
-
 }
