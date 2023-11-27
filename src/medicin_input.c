@@ -3,11 +3,6 @@
 #include <string.h>
 /* int medicin();
 
-
-
-
-
-
     char check1, check2, check3, check5, check6, check7;
     int check4;
     int dosis, frek;
@@ -111,7 +106,3 @@ void print_recept(char* cpr, char* navn, char* mednavn, char* besk, int styrke) 
      } */
 
 }
-
-
-
-
