@@ -26,20 +26,11 @@ Fælles:
     Rapportering
         Kapitler
         Dokumentation af program
+    Tjek studieordning
 
 
-Print recept:
-CPR: (CPR_nummer)
-Patient navn: (navn)
 
-Medicin:
- - Navn
- - Beskrivelse
- - Styrke
-
-Dosering forslag:
- - Dosis
- - Tidsunkter/Note
-
-
-Print: Hvis der er ekstra medicin, så printes det også med det andet medicin recepter.
+Prioriteret liste over nice2haves:
+    1. 
+    2.
+    3.

@@ -21,7 +21,7 @@ int main(void) {
 
     scanf(" %c", &valg);
     if(valg == 'r'){
-        //print_recepts
+        //print_recepts funktion kaldes - Loopet skal være i selve funktionen senere hen
         for(int i = 0; i < antalrecepts; i++) {
             print_recept(cur.cpr, cur.name, recepts[i].medname, recepts[i].notes, recepts[i].dosage);
         }
@@ -32,11 +32,11 @@ int main(void) {
 }
 
 char* load_patient() {
-
+    //init db
     sqlite3 *db;
     char *err_msg = 0;
 
-    int rc = sqlite3_open("../sql/p1data.db", &db);
+    int rc = sqlite3_open("sql/p1data.db", &db);
 
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(db));
@@ -48,6 +48,7 @@ char* load_patient() {
     char svar;
     char sql[250];
 
+    //Indlæs patient i program
     do{
         strcpy(cur.cpr, "NULL");
         strcpy(cur.name, "NULL");
