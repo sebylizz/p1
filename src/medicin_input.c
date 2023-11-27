@@ -3,11 +3,6 @@
 #include <string.h>
 /* int medicin();
 
-
-
-
-
-
     char check1, check2, check3, check5, check6, check7;
     int check4;
     int dosis, frek;
@@ -33,7 +28,6 @@
         printf("Is %d mg the correct dosage of %s you wish to prescribe? [y/n]\n", dosis, med_input);
         scanf(" %c", &check2);
 
-
     } while (check2 != 'y');
     char times[frek][6];
     do { // Spørge om frekvensen
@@ -52,7 +46,6 @@
         printf("2. Do you wish to give the patient a description of when to take the medicine? [1/2]\n");
         scanf(" %d", &check4);
     } while (check4 != 1 && check4 != 2);
-
 
     if (check4 == 1) {
         if (frek == 1) {
@@ -79,7 +72,6 @@
                 scanf(" %c", &check6);
 
             } while (check6 != 'y');
-
         }
     }
     if (check4 == 2) {
@@ -109,9 +101,4 @@ void print_recept(char* cpr, char* navn, char* mednavn, char* besk, int styrke) 
      else {
          printf("%s\n\n\n", d_time);
      } */
-
 }
-
-
-
-
