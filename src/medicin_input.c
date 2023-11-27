@@ -1,7 +1,7 @@
 
 #include <stdio.h>
 #include <string.h>
-int medicin();
+/* int medicin();
 
 
 
@@ -94,29 +94,23 @@ int medicin();
         }
         while (check7 != 'y');
     }
-
-
-
+*/
 // printning af recept (ikke helt færdig)
-void print_recept(dosis, frek, med_input, s_time, times, d_time) {
-    for(int i = 0; i < antalrecepts; i++){
+void print_recept(char* cpr, char* navn, char* mednavn, char* besk, int styrke) {
 
-        printf("CPR: %ld\n Patient navn: %s\n\n Medicin: \n - Navn: %s\n Beskrivelse: %s\n - Styrke: %d (mg)",recepts[i].cpr, cur.navn, med_input, d_time, dosis);
-        printf("\n\nDosering forslag: \n - Dosis: %d (mg) %d gang(e) om dagen\n")
+    printf("CPR: %s\n Patient navn: %s\n\n Medicin: \n - Navn: %s\n Beskrivelse: %s\n - Styrene: %d (mg)", cpr, navn, mednavn, besk, styrke);
+    /* printf("\n\nDosering forslag: \n - Dosis: %d (mg) %d gang(e) om dagen\n")
+     if (check4 == 1) {
+         printf("Doserings tidspunkter: ");
+         for (int i = 0; i < frek; i++){
+             printf("%s  ", times[i]);
+         }
+     }
+     else {
+         printf("%s\n\n\n", d_time);
+     } */
 
-            printf("Doserings tidspunkter: ");
-            for (int i = 0; i < frek; i++){
-                printf("%s  ", times[i]);
-        }
-        }
-        else {
-            printf("%s\n\n\n", d_time);
-        }
-        printf("%ld, %i, %i, %i\n", recepts[i].cpr, recepts[i].id, recepts[i].dosage, recepts[i].frequency);
-    }
-
-    }
-
+}
 
 
 

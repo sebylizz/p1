@@ -22,7 +22,9 @@ int main(void) {
     scanf(" %c", &valg);
     if(valg == 'r'){
         //print_recepts
-        for(int i = 0; i < antalrecepts; i++){printf("%s, %d, %d, %s\n", recepts[i].medname, recepts[i].dosage, recepts[i].frequency, recepts[i].notes);}
+        for(int i = 0; i < antalrecepts; i++) {
+            print_recept(cur.cpr, cur.name, recepts[i].medname, recepts[i].notes, recepts[i].dosage);
+        }
     }
 
     free(recepts);
@@ -34,7 +36,7 @@ char* load_patient() {
     sqlite3 *db;
     char *err_msg = 0;
 
-    int rc = sqlite3_open("sql/p1data.db", &db);
+    int rc = sqlite3_open("../sql/p1data.db", &db);
 
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(db));
