@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <string.h>
 /* int medicin();
@@ -93,7 +92,7 @@
 // printning af recept (ikke helt færdig)
 void print_recept(char* cpr, char* navn, char* mednavn, char* besk, int styrke) {
 
-    printf("CPR: %s\n Patient navn: %s\n\n Medicin: \n - Navn: %s\n Beskrivelse: %s\n - Styrene: %d (mg)", cpr, navn, mednavn, besk, styrke);
+    printf("CPR: %s\n Patient navn: %s\n\n Medicin: \n - Navn: %s\n Beskrivelse: %s\n - Styrke: %d (mg)", cpr, navn, mednavn, besk, styrke);
     /* printf("\n\nDosering forslag: \n - Dosis: %d (mg) %d gang(e) om dagen\n")
      if (check4 == 1) {
          printf("Doserings tidspunkter: ");
