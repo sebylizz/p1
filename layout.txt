@@ -1,1 +1,15 @@
 layout her sharan
+
+printf(
+
+Medicin_recept # | Medicin_Navn | Dosering | Intagelses_Frekvens | Ekstra_Bemærkninger
+------------------------------------------------------------------------------------------------------------
+Medicin_recept 1 | Panodil      | 500 mg   | 3 piller pr. dag    | Han har ikke Brug mere
+------------------------------------------------------------------------------------------------------------
+Medicin_recept 2 | Ipren        | 500 mg   | 3 piller pr. dag    | Menstruation
+------------------------------------------------------------------------------------------------------------
+Medicin_recept 3 | Benadryl     | 250 mg   | 1 pille pr. dag    | Han har ikke Brug mere
+------------------------------------------------------------------------------------------------------------
+Medicin_recept 4 | Panodil      | 500 mg   | 3 piller pr. dag    | Han har ikke Brug mere
+------------------------------------------------------------------------------------------------------------
+
