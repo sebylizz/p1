@@ -21,8 +21,10 @@ int main(void) {
 
     scanf(" %c", &valg);
     if(valg == 'r'){
-        //print_recepts
-        for(int i = 0; i < antalrecepts; i++){printf("%s, %d, %d, %s\n", recepts[i].medname, recepts[i].dosage, recepts[i].frequency, recepts[i].notes);}
+        //print_recepts funktion kaldes - Loopet skal være i selve funktionen senere hen
+        for(int i = 0; i < antalrecepts; i++) {
+            print_recept(cur.cpr, cur.name, recepts[i].medname, recepts[i].notes, recepts[i].dosage);
+        }
     }
 
     free(recepts);
@@ -30,7 +32,7 @@ int main(void) {
 }
 
 char* load_patient() {
-
+    //init db
     sqlite3 *db;
     char *err_msg = 0;
 
@@ -46,6 +48,7 @@ char* load_patient() {
     char svar;
     char sql[250];
 
+    //Indlæs patient i program
     do{
         strcpy(cur.cpr, "NULL");
         strcpy(cur.name, "NULL");

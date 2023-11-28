@@ -15,3 +15,4 @@ int person_callback(void *, int, char **, char **);
 int recept_callback(void *, int, char **, char **);
 int executeSQL(const char *sql, int type);
 char* load_patient();
+void print_recept(char* cpr, char* navn, char* mednavn, char* besk, int styrke);
