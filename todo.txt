@@ -28,9 +28,13 @@ Fælles:
         Dokumentation af program
     Tjek studieordning
 
-
+Must haves:
+    - Slettefunktion baseret på id i patmed tabel
+    - Print recept der fungerer godt og ser sej ud
+    - Insert funktion laves færdig med checks og SQL
 
 Prioriteret liste over nice2haves:
-    1. 
-    2.
-    3.
+    1. Læge/bruger login
+    2. Komplikationer/bivirkninger
+    3. Specifikke tidspunkter til medicin
+    4. Sygdomme
