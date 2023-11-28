@@ -113,7 +113,7 @@ void print_recept(dosis, frek, med_input, s_time, times, d_time) {
         printf("%ld, %i, %i, %i\n", recepts[i].cpr, recepts[i].id, recepts[i].dosage, recepts[i].frequency);
     }
 
-    }
+
 
 
 

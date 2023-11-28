@@ -15,4 +15,3 @@ int person_callback(void *, int, char **, char **);
 int recept_callback(void *, int, char **, char **);
 int executeSQL(const char *sql, int type);
 char* load_patient();
-char* print_recept(dosis, frek, med_input, s_time, times, d_time);
