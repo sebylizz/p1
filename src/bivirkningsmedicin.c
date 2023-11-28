@@ -13,7 +13,6 @@ int main(void) {
 
 }
 
-
 char *med_input = "Panodil";
 int har_modvirkende_medicin(char* med){
     return 1;
