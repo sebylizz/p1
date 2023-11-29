@@ -127,7 +127,6 @@ void print_recept(char* cpr, char* navn, char* mednavn, char* besk, int styrke) 
 
 }
 
-
 int getTerminalWidth() {
     struct winsize w;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
