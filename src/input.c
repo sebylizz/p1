@@ -10,6 +10,8 @@ int antalrecepts, medid;
 sqlite3 *db;
 char *err_msg = 0;
 
+char* sti = "sql/p1data.db";
+
 
 int main(void) {
 
@@ -58,7 +60,7 @@ int main(void) {
 }
 
 char* load_patient() {
-    int rc = sqlite3_open("sql/p1data.db", &db);
+    int rc = sqlite3_open(sti, &db);
 
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(db));
