@@ -10,6 +10,8 @@ int antalrecepts, medid;
 sqlite3 *db;
 char *err_msg = 0;
 
+char* sti = "sql/p1data.db";
+
 
 int main(void) {
 
@@ -33,7 +35,7 @@ int main(void) {
         }
         else if (valg == 'i') {
             medicin();
-            print_recept(cur.cpr, cur.name, recepts[antalrecepts].medname, recepts[antalrecepts].notes, recepts[antalrecepts].dosage);
+            print_recept(cur.cpr, cur.name, recepts[antalrecepts-1].medname, recepts[antalrecepts-1].notes, recepts[antalrecepts-1].dosage);
         }
         else if (valg == 's') {
             int sletvalg;
@@ -58,7 +60,7 @@ int main(void) {
 }
 
 char* load_patient() {
-    int rc = sqlite3_open("sql/p1data.db", &db);
+    int rc = sqlite3_open(sti, &db);
 
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(db));
@@ -160,7 +162,9 @@ void insert_recept(int medid, int dosis, int frek, char desk[250]){
     char sql[250];
     sprintf(sql, "INSERT INTO patmed(cpr, id, dosage, frequency, notes) VALUES('%s', %d, %d, %d, '%s')", cur.cpr, medid, dosis, frek, desk);
     sqlite3_exec(db, sql, NULL, 0, &err_msg);
-    antalrecepts = 1;
+    antalrecepts = 0;
+    free(recepts);
+    recepts = NULL;
     sprintf(sql, "SELECT medicine.medicine, patmed.dosage, patmed.frequency, patmed.notes FROM patmed JOIN medicine ON medicine.id = patmed.id WHERE patmed.cpr = '%s'", cur.cpr);
     sqlite3_exec(db, sql, recept_callback, 0, &err_msg);
 
