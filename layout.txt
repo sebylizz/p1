@@ -1,7 +1,7 @@
 layout her sharan
 
 printf(
-
+b
 Medicin_recept # | Medicin_Navn | Dosering | Intagelses_Frekvens | Ekstra_Bemærkninger
 ------------------------------------------------------------------------------------------------------------
 Medicin_recept 1 | Panodil      | 500 mg   | 3 piller pr. dag    | Han har ikke Brug mere
