@@ -23,13 +23,32 @@ int main(void) {
         scanf(" %c", &valg);
         if (valg == 'r') {
             //print_recepts funktion kaldes - Loopet skal være i selve funktionen senere hen
+            printf("Navn: %s\nCPR: %s\n", cur.name, cur.cpr);
             for (int i = 0; i < antalrecepts; i++) {
+                printf("Recept %d.", i+1);
                 print_recept(cur.cpr, cur.name, recepts[i].medname, recepts[i].notes, recepts[i].dosage);
             }
-        } else if (valg == 'i') {
-            medicin();
-
         }
+        else if (valg == 'i') {
+            medicin();
+            print_recept(cur.cpr, cur.name, recepts[antalrecepts].medname, recepts[antalrecepts].notes, recepts[antalrecepts].dosage);
+        }
+        else if (valg == 's') {
+            int sletvalg;
+            if (antalrecepts == 0) {
+                printf("Der findes ikke nogle recepter under den valgte patients navn.\n");
+            }
+            else {
+                printf("Hvilken recept ønsker du at slette?\n");
+                for (int i = 0; i < antalrecepts; i++) {
+                    printf("Recept %d.", i+1);
+                    print_recept(cur.cpr, cur.name, recepts[i].medname, recepts[i].notes, recepts[i].dosage);
+                }
+            }
+            scanf(" %d", &sletvalg);
+            // indsæt sletfunktion sammenkoblet med "sletvalg"
+        }
+
     } while (valg != 'q');
 
     free(recepts);
