@@ -13,23 +13,24 @@ int main(void) {
     char* cpr = load_patient();
 
     char valg;
+    do {
 
-    printf("Skriv i for at oprette recept\n");
-    printf("Skriv s for at slette recept\n");
-    printf("Skriv r for at se aktuelle recepter\n");
-    printf("Skriv q for at afslutte program\n");
+        printf("Skriv i for at oprette recept\n");
+        printf("Skriv s for at slette recept\n");
+        printf("Skriv r for at se aktuelle recepter\n");
+        printf("Skriv q for at afslutte program\n");
 
-    scanf(" %c", &valg);
-    if(valg == 'r'){
-        //print_recepts funktion kaldes - Loopet skal være i selve funktionen senere hen
-        for(int i = 0; i < antalrecepts; i++) {
-            print_recept(cur.cpr, cur.name, recepts[i].medname, recepts[i].notes, recepts[i].dosage);
+        scanf(" %c", &valg);
+        if (valg == 'r') {
+            //print_recepts funktion kaldes - Loopet skal være i selve funktionen senere hen
+            for (int i = 0; i < antalrecepts; i++) {
+                print_recept(cur.cpr, cur.name, recepts[i].medname, recepts[i].notes, recepts[i].dosage);
+            }
+        } else if (valg == 'i') {
+            medicin();
+
         }
-    }
-    else if(valg == 'i'){
-        medicin();
-
-    }
+    } while (valg != 'q');
 
     free(recepts);
     return 0;
