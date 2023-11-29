@@ -6,37 +6,59 @@
 
 person cur;
 recept *recepts = NULL;
-int antalrecepts;
+int antalrecepts, medid;
+sqlite3 *db;
+char *err_msg = 0;
+
 
 int main(void) {
 
     char* cpr = load_patient();
-
     char valg;
 
-    printf("Skriv i for at oprette recept\n");
-    printf("Skriv s for at slette recept\n");
-    printf("Skriv r for at se aktuelle recepter\n");
-    printf("Skriv q for at afslutte program\n");
+    do {
+        printf("Skriv i for at oprette recept\n");
+        printf("Skriv s for at slette recept\n");
+        printf("Skriv r for at se aktuelle recepter\n");
+        printf("Skriv q for at afslutte program\n");
 
-    scanf(" %c", &valg);
-    if(valg == 'r'){
-        //print_recepts funktion kaldes - Loopet skal være i selve funktionen senere hen
-        for(int i = 0; i < antalrecepts; i++) {
-            print_recept(cur.cpr, cur.name, recepts[i].medname, recepts[i].notes, recepts[i].dosage);
+        scanf(" %c", &valg);
+        if (valg == 'r') {
+            //print_recepts funktion kaldes - Loopet skal være i selve funktionen senere hen
+            printf("Navn: %s\nCPR: %s\n", cur.name, cur.cpr);
+            for (int i = 0; i < antalrecepts; i++) {
+                printf("Recept %d.", i+1);
+                print_recept(cur.cpr, cur.name, recepts[i].medname, recepts[i].notes, recepts[i].dosage);
+            }
         }
-    }
+        else if (valg == 'i') {
+            medicin();
+            print_recept(cur.cpr, cur.name, recepts[antalrecepts].medname, recepts[antalrecepts].notes, recepts[antalrecepts].dosage);
+        }
+        else if (valg == 's') {
+            int sletvalg;
+            if (antalrecepts == 0) {
+                printf("Der findes ikke nogle recepter under den valgte patients navn.\n");
+            }
+            else {
+                printf("Hvilken recept ønsker du at slette?\n");
+                for (int i = 0; i < antalrecepts; i++) {
+                    printf("Recept %d.", i+1);
+                    print_recept(cur.cpr, cur.name, recepts[i].medname, recepts[i].notes, recepts[i].dosage);
+                }
+            }
+            scanf(" %d", &sletvalg);
+            // indsæt sletfunktion sammenkoblet med "sletvalg"
+        }
+
+    } while (valg != 'q');
 
     free(recepts);
     return 0;
 }
 
 char* load_patient() {
-    //init db
-    sqlite3 *db;
-    char *err_msg = 0;
-
-    int rc = sqlite3_open("../sql/p1data.db", &db);
+    int rc = sqlite3_open("sql/p1data.db", &db);
 
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(db));
@@ -111,4 +133,36 @@ int recept_callback(void *NotUsed, int argc, char **argv, char **azColName) {
     antalrecepts++;
 
     return 0;
+}
+
+int medicine_callback(void *NotUsed, int argc, char **argv, char **azColName){
+    medid = atoi(argv[0]);
+    printf("%d\n", medid);
+    return 0;
+}
+
+int check_med(char med_input[20]){
+    int rc = sqlite3_open("sql/p1data.db", &db);
+
+    medid = 0;
+    char sql[250];
+    sprintf(sql, "SELECT id FROM medicine WHERE LOWER(medicine) = LOWER('%s')", med_input);
+    sqlite3_exec(db, sql, medicine_callback, 0, &err_msg);
+
+    return medid;
+
+    sqlite3_close(db);
+}
+
+void insert_recept(int medid, int dosis, int frek, char desk[250]){
+    int rc = sqlite3_open("sql/p1data.db", &db);
+
+    char sql[250];
+    sprintf(sql, "INSERT INTO patmed(cpr, id, dosage, frequency, notes) VALUES('%s', %d, %d, %d, '%s')", cur.cpr, medid, dosis, frek, desk);
+    sqlite3_exec(db, sql, NULL, 0, &err_msg);
+    antalrecepts = 1;
+    sprintf(sql, "SELECT medicine.medicine, patmed.dosage, patmed.frequency, patmed.notes FROM patmed JOIN medicine ON medicine.id = patmed.id WHERE patmed.cpr = '%s'", cur.cpr);
+    sqlite3_exec(db, sql, recept_callback, 0, &err_msg);
+
+    sqlite3_close(db);
 }

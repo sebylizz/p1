@@ -38,3 +38,4 @@ Prioriteret liste over nice2haves:
     2. Komplikationer/bivirkninger
     3. Specifikke tidspunkter til medicin
     4. Sygdomme
+    5. Felt til doseringstidspunkter
