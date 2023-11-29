@@ -82,7 +82,7 @@ void medicin() {
     if (check4 == 2) {
         do {
             char d_time[250]; // spørger om beskrivelsen
-            printf("State your description of when the patient should take %s:\n", med_input);
+            printf("State your description of when and how the patient should take %s:\n", med_input);
             getchar();
             fgets(d_time, 250, stdin);
             // Check funktion
