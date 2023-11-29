@@ -26,6 +26,10 @@ int main(void) {
             print_recept(cur.cpr, cur.name, recepts[i].medname, recepts[i].notes, recepts[i].dosage);
         }
     }
+    else if(valg == 'i'){
+        medicin();
+
+    }
 
     free(recepts);
     return 0;

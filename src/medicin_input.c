@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
-int medicin() {
+void medicin() {
 
     char check1, check2, check3, check5, check6, check7;
     int check4;
