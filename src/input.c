@@ -19,7 +19,7 @@ int main(void) {
     char valg;
 
     do {
-        printf("Skriv i for at oprette recept\n");
+        printf("\nSkriv i for at oprette recept\n");
         printf("Skriv s for at slette recept\n");
         printf("Skriv r for at se aktuelle recepter\n");
         printf("Skriv q for at afslutte program\n");
@@ -27,8 +27,8 @@ int main(void) {
         scanf(" %c", &valg);
         if (valg == 'r') {
             //print_recepts funktion kaldes - Loopet skal være i selve funktionen senere hen
-            printf("Navn: %s | CPR: %s\n", cur.name, cur.cpr);
-            printf("--------------------------------------------------------------------\n");
+            printf("\nNavn: %s | CPR: %s\n", cur.name, cur.cpr);
+            printf("__________________________________________________\n");
             for (int i = 0; i < antalrecepts; i++) {
                 printf("Recept %d.", i+1);
                 print_recept(cur.cpr, cur.name, recepts[i].medname, recepts[i].notes, recepts[i].dosage);
