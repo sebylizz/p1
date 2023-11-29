@@ -10,7 +10,7 @@ int antalrecepts, medid;
 sqlite3 *db;
 char *err_msg = 0;
 
-char* sti = "sql/p1data.db";
+char* sti = "../sql/p1data.db";
 
 
 int main(void) {
@@ -27,7 +27,8 @@ int main(void) {
         scanf(" %c", &valg);
         if (valg == 'r') {
             //print_recepts funktion kaldes - Loopet skal være i selve funktionen senere hen
-            printf("Navn: %s\nCPR: %s\n", cur.name, cur.cpr);
+            printf("Navn: %s | CPR: %s\n", cur.name, cur.cpr);
+            printf("--------------------------------------------------------------------\n");
             for (int i = 0; i < antalrecepts; i++) {
                 printf("Recept %d.", i+1);
                 print_recept(cur.cpr, cur.name, recepts[i].medname, recepts[i].notes, recepts[i].dosage);

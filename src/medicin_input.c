@@ -13,7 +13,7 @@ void medicin() {
 
     do {
         // Spørge om medicin
-        // Skal kobles  sammen med første input funktion så der spørges om navnet herunder //
+        // Skal kobles sammen med første input funktion så der spørges om navnet herunder //
         printf("What medicine would you like to prescribe to \n");
         scanf(" %s", med_input);
         medid = check_med(med_input);
@@ -105,7 +105,8 @@ void medicin() {
 // printning af recept (ikke helt færdig)
 void print_recept(char* cpr, char* navn, char* mednavn, char* besk, int styrke) {
 
-    printf("\nMedicin: \n - Navn: %s\n Beskrivelse: %s\n - Styrke: %d (mg)\n\n", mednavn, besk, styrke);
+    printf(" | Medicin: %s | Styrke: %d (mg)\nBeskrivelse: %s \n", mednavn, styrke, besk);
+    printf("------------------------------------------------------------------------------------------\n");
     /* printf("\n\nDosering forslag: \n - Dosis: %d (mg) %d gang(e) om dagen\n")
      if (check4 == 1) {
          printf("Doserings tidspunkter: ");
