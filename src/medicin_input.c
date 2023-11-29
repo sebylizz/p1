@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 #include "input.h"
+#include <sys/ioctl.h>
+#include <unistd.h>
 
 void medicin() {
 
@@ -106,7 +108,12 @@ void medicin() {
 void print_recept(char* cpr, char* navn, char* mednavn, char* besk, int styrke) {
 
     printf(" | Medicin: %s | Styrke: %d (mg)\nBeskrivelse: %s \n", mednavn, styrke, besk);
-    printf("------------------------------------------------------------------------------------------\n");
+    int width = getTerminalWidth();
+    char symbol = '-';
+    for (int i = 0; i < width; i++) {
+        printf("%c", symbol);
+    }
+    printf("\n");
     /* printf("\n\nDosering forslag: \n - Dosis: %d (mg) %d gang(e) om dagen\n")
      if (check4 == 1) {
          printf("Doserings tidspunkter: ");
@@ -118,4 +125,11 @@ void print_recept(char* cpr, char* navn, char* mednavn, char* besk, int styrke) 
          printf("%s\n\n\n", d_time);
      } */
 
+}
+
+
+int getTerminalWidth() {
+    struct winsize w;
+    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+    return w.ws_col;
 }
