@@ -23,7 +23,7 @@ int main(void) {
     if(valg == 'r'){
         //print_recepts funktion kaldes - Loopet skal være i selve funktionen senere hen
         for(int i = 0; i < antalrecepts; i++) {
-            print_recept(cur.cpr, cur.name, recepts[i].medname, recepts[i].notes, recepts[i].dosage);
+            print_recept(recepts[i].medname, recepts[i].notes, recepts[i].dosage, recepts[i].frequency);
         }
     }
 
