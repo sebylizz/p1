@@ -10,7 +10,7 @@ int antalrecepts, medid;
 sqlite3 *db;
 char *err_msg = 0;
 
-char* sti = "../sql/p1data.db";
+char* sti = "sql/p1data.db";
 
 
 int main(void) {

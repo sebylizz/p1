@@ -3,6 +3,7 @@
 #include "input.h"
 #include <sys/ioctl.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 void medicin() {
 
@@ -105,9 +106,21 @@ void medicin() {
 }
 
 // printning af recept (ikke helt færdig)
-void print_recept(char* cpr, char* navn, char* mednavn, char* besk, int styrke) {
+void print_recept(char* cpr, char* navn, char* mednavn, char* besk, int styrke, int frek) {
 
-    printf(" | Medicin: %s | Styrke: %d (mg)\nBeskrivelse: %s \n", mednavn, styrke, besk);
+    printf(" | Medicin: %s", mednavn);
+           for (int i = strlen(mednavn); i < 12; i++){
+               printf(" ");
+           }
+           printf("| Styrke: %d mg", styrke);
+           char temp[5];
+           sprintf(temp, "%d", styrke);
+           for (int i = strlen(temp); i < 4; i++){
+               printf(" ");
+           }
+           printf(" | Frekvens: %d gang(e) om dagen \nBeskrivelse: %s \n",frek, besk);
+
+
     int width = getTerminalWidth();
     char symbol = '-';
     for (int i = 0; i < width; i++) {
