@@ -5,6 +5,7 @@ typedef struct{
 } person;
 
 typedef struct{
+    int rid;
     char medname[20];
     int dosage;
     int frequency;
@@ -15,8 +16,9 @@ int person_callback(void *, int, char **, char **);
 int recept_callback(void *, int, char **, char **);
 int medicine_callback(void *, int, char **, char **);
 char* load_patient();
-void print_recept(char* cpr, char* navn, char* mednavn, char* besk, int styrke);
+void print_recept(int tempid, char* mednavn, char* besk, int styrke);
 void medicin();
 void insert_recept(int medid, int dosis, int frek, char desk[250]);
+void delete_recept(int valg);
 int check_med(char med_input[20]);
 int getTerminalWidth();

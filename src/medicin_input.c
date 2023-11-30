@@ -105,8 +105,9 @@ void medicin() {
 }
 
 // printning af recept (ikke helt færdig)
-void print_recept(char* cpr, char* navn, char* mednavn, char* besk, int styrke) {
+void print_recept(int tempid, char* mednavn, char* besk, int styrke) {
 
+    printf("Recept #%d", tempid);
     printf(" | Medicin: %s | Styrke: %d (mg)\nBeskrivelse: %s \n", mednavn, styrke, besk);
     int width = getTerminalWidth();
     char symbol = '-';

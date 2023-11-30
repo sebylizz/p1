@@ -10,7 +10,7 @@ int antalrecepts, medid;
 sqlite3 *db;
 char *err_msg = 0;
 
-char* sti = "../sql/p1data.db";
+char* sti = "sql/p1data.db";
 
 
 int main(void) {
@@ -30,13 +30,12 @@ int main(void) {
             printf("\nNavn: %s | CPR: %s\n", cur.name, cur.cpr);
             printf("__________________________________________________\n");
             for (int i = 0; i < antalrecepts; i++) {
-                printf("Recept %d.", i+1);
-                print_recept(cur.cpr, cur.name, recepts[i].medname, recepts[i].notes, recepts[i].dosage);
+                print_recept(i+1, recepts[i].medname, recepts[i].notes, recepts[i].dosage);
             }
         }
         else if (valg == 'i') {
             medicin();
-            print_recept(cur.cpr, cur.name, recepts[antalrecepts-1].medname, recepts[antalrecepts-1].notes, recepts[antalrecepts-1].dosage);
+            print_recept(antalrecepts-1, recepts[antalrecepts-1].medname, recepts[antalrecepts-1].notes, recepts[antalrecepts-1].dosage);
         }
         else if (valg == 's') {
             int sletvalg;
@@ -44,13 +43,15 @@ int main(void) {
                 printf("Der findes ikke nogle recepter under den valgte patients navn.\n");
             }
             else {
-                printf("Hvilken recept ønsker du at slette?\n");
+                printf("\nNavn: %s | CPR: %s\n", cur.name, cur.cpr);
+                printf("__________________________________________________\n");
                 for (int i = 0; i < antalrecepts; i++) {
-                    printf("Recept %d.", i+1);
-                    print_recept(cur.cpr, cur.name, recepts[i].medname, recepts[i].notes, recepts[i].dosage);
+                    print_recept(i+1, recepts[i].medname, recepts[i].notes, recepts[i].dosage);
                 }
+                printf("\nHvilken recept ønsker du at slette? Indtast nummeret:\n");
             }
             scanf(" %d", &sletvalg);
+            delete_recept(sletvalg-1);
             // indsæt sletfunktion sammenkoblet med "sletvalg"
         }
 
@@ -96,7 +97,7 @@ char* load_patient() {
 
     } while (svar != 'y' || strcmp(cur.cpr, "NULL") == 0);
 
-    sprintf(sql, "SELECT medicine.medicine, patmed.dosage, patmed.frequency, patmed.notes FROM patmed JOIN medicine ON medicine.id = patmed.id WHERE patmed.cpr = '%s'", cpr);
+    sprintf(sql, "SELECT medicine.medicine, patmed.dosage, patmed.frequency, patmed.notes, rid FROM patmed JOIN medicine ON medicine.id = patmed.id WHERE patmed.cpr = '%s'", cpr);
     sqlite3_exec(db, sql, recept_callback, 0, &err_msg);
 
     sqlite3_close(db);
@@ -127,11 +128,11 @@ int recept_callback(void *NotUsed, int argc, char **argv, char **azColName) {
     } else {
         recepts = realloc(recepts, (antalrecepts + 1) * sizeof(recept));
     }
-
     strcpy(recepts[antalrecepts].medname, strdup(argv[0]));
     recepts[antalrecepts].dosage = atoi(argv[1]);
     recepts[antalrecepts].frequency = atoi(argv[2]);
     if(argv[3] != NULL){strcpy(recepts[antalrecepts].notes, (strdup(argv[3])));}
+    recepts[antalrecepts].rid = atoi(argv[4]);
 
     antalrecepts++;
 
@@ -166,7 +167,22 @@ void insert_recept(int medid, int dosis, int frek, char desk[250]){
     antalrecepts = 0;
     free(recepts);
     recepts = NULL;
-    sprintf(sql, "SELECT medicine.medicine, patmed.dosage, patmed.frequency, patmed.notes FROM patmed JOIN medicine ON medicine.id = patmed.id WHERE patmed.cpr = '%s'", cur.cpr);
+    sprintf(sql, "SELECT medicine.medicine, patmed.dosage, patmed.frequency, patmed.notes, rid FROM patmed JOIN medicine ON medicine.id = patmed.id WHERE patmed.cpr = '%s'", cur.cpr);
+    sqlite3_exec(db, sql, recept_callback, 0, &err_msg);
+
+    sqlite3_close(db);
+}
+
+void delete_recept(int valg){
+    int rc = sqlite3_open("sql/p1data.db", &db);
+
+    char sql[250];
+    sprintf(sql, "DELETE FROM patmed WHERE rid = %d", recepts[valg].rid);
+    sqlite3_exec(db, sql, NULL, 0, &err_msg);
+    antalrecepts = 0;
+    free(recepts);
+    recepts = NULL;
+    sprintf(sql, "SELECT medicine.medicine, patmed.dosage, patmed.frequency, patmed.notes, rid FROM patmed JOIN medicine ON medicine.id = patmed.id WHERE patmed.cpr = '%s'", cur.cpr);
     sqlite3_exec(db, sql, recept_callback, 0, &err_msg);
 
     sqlite3_close(db);
