@@ -16,7 +16,7 @@ int person_callback(void *, int, char **, char **);
 int recept_callback(void *, int, char **, char **);
 int medicine_callback(void *, int, char **, char **);
 char* load_patient();
-void print_recept(int tempid, char* mednavn, char* besk, int styrke);
+void print_recept(int tempid, char* mednavn, char* besk, int styrke, int frek);
 void medicin();
 void insert_recept(int medid, int dosis, int frek, char desk[250]);
 void delete_recept(int valg);
