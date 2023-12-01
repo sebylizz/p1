@@ -28,7 +28,11 @@ int main(void) {
         if (valg == 'r') {
             //print_recepts funktion kaldes - Loopet skal være i selve funktionen senere hen
             printf("\nNavn: %s | CPR: %s\n", cur.name, cur.cpr);
-            printf("__________________________________________________\n");
+            int width = getTerminalWidth();
+            char symbol = '_';
+            for (int i = 0; i < width; i++) {
+                printf("%c", symbol);
+            }
             for (int i = 0; i < antalrecepts; i++) {
                 print_recept(i+1, recepts[i].medname, recepts[i].notes, recepts[i].dosage, recepts[i].frequency);
             }
@@ -44,7 +48,11 @@ int main(void) {
             }
             else {
                 printf("\nNavn: %s | CPR: %s\n", cur.name, cur.cpr);
-                printf("__________________________________________________\n");
+                int width = getTerminalWidth();
+                char symbol = '_';
+                for (int i = 0; i < width; i++) {
+                    printf("%c", symbol);
+                }
                 for (int i = 0; i < antalrecepts; i++) {
                     print_recept(i+1, recepts[i].medname, recepts[i].notes, recepts[i].dosage, recepts[i].frequency);
                 }

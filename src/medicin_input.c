@@ -104,7 +104,7 @@ void medicin() {
     insert_recept(medid, dosis, frek, desk);
 }
 
-// printning af recept (ikke helt færdig)
+// printning af recept
 void print_recept(int tempid, char* mednavn, char* besk, int styrke, int frek) {
 
     printf("Recept #%d", tempid);
@@ -121,7 +121,7 @@ void print_recept(int tempid, char* mednavn, char* besk, int styrke, int frek) {
            }
            printf(" | Frekvens: %d gang(e) om dagen \nBeskrivelse: %s \n",frek, besk);
 
-
+    // Printer linjer mellem recepter
     int width = getTerminalWidth();
     char symbol = '-';
     for (int i = 0; i < width; i++) {
