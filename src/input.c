@@ -28,14 +28,20 @@ int main(void) {
         if (valg == 'r') {
             //print_recepts funktion kaldes - Loopet skal være i selve funktionen senere hen
             printf("\nNavn: %s | CPR: %s\n", cur.name, cur.cpr);
-            printf("__________________________________________________\n");
+            int width = getTerminalWidth();
+            char symbol = '_';
+            for (int i = 0; i < width; i++) {
+                printf("%c", symbol);
+            }
             for (int i = 0; i < antalrecepts; i++) {
                 print_recept(i+1, recepts[i].medname, recepts[i].notes, recepts[i].dosage, recepts[i].frequency);
             }
+            printf("\n");
         }
         else if (valg == 'i') {
             medicin();
             print_recept(antalrecepts-1, recepts[antalrecepts-1].medname, recepts[antalrecepts-1].notes, recepts[antalrecepts-1].dosage, recepts[antalrecepts-1].frequency);
+            printf("\n");
         }
         else if (valg == 's') {
             int sletvalg;
@@ -44,9 +50,14 @@ int main(void) {
             }
             else {
                 printf("\nNavn: %s | CPR: %s\n", cur.name, cur.cpr);
-                printf("__________________________________________________\n");
+                int width = getTerminalWidth();
+                char symbol = '_';
+                for (int i = 0; i < width; i++) {
+                    printf("%c", symbol);
+                }
                 for (int i = 0; i < antalrecepts; i++) {
                     print_recept(i+1, recepts[i].medname, recepts[i].notes, recepts[i].dosage, recepts[i].frequency);
+                    printf("\n");
                 }
                 printf("\nHvilken recept ønsker du at slette? Indtast nummeret:\n");
             }
@@ -102,7 +113,7 @@ char* load_patient() {
 
     sqlite3_close(db);
 
-    printf("Valgte patient er %s\n", cur.name);
+    printf("\nValgte patient er: %s\n", cur.name);
     return cur.cpr;
 }
 
