@@ -22,7 +22,7 @@ int main(void) {
         printf("\nType c to create a prescription\n");
         printf("Type d to delete a prescription\n");
         printf("Type v to view existing prescription(s)\n");
-        printf("Type q to exit program\n");
+        printf("Type q to quit program\n");
 
         scanf(" %c", &valg);
         if (valg == 'v') {
