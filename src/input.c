@@ -59,11 +59,15 @@ int main(void) {
                     print_recept(i+1, recepts[i].medname, recepts[i].notes, recepts[i].dosage, recepts[i].frequency);
                     printf("\n");
                 }
-                printf("\nWhich prescription do you wish to delete? Type the registration number:\n");
+                char check_sletvalg;
+                do {
+                    printf("\nWhich prescription do you wish to delete? Type the registration number:\n");
+                    scanf(" %d", &sletvalg);
+                    printf("\nIs it correct that you want to delete prescription %d? [y/n]\n", sletvalg);
+                    scanf(" %c", &check_sletvalg);
+                } while (check_sletvalg != 'y');
+                delete_recept(sletvalg-1);
             }
-            scanf(" %d", &sletvalg);
-            delete_recept(sletvalg-1);
-            // indsæt sletfunktion sammenkoblet med "sletvalg"
         }
 
     } while (valg != 'q');
