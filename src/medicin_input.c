@@ -16,29 +16,29 @@ void medicin() {
     do {
         // Spørge om medicin
         // Skal kobles sammen med første input funktion så der spørges om navnet herunder //
-        printf("What medicine would you like to prescribe to \n");
+        printf("\nWhat medicine would you like to prescribe to \n");
         scanf(" %s", med_input);
         medid = check_med(med_input);
 
         while(medid == 0){
-            printf("Medicine not found, please try again\n");
-            printf("What medicine would you like to prescribe to \n");
+            printf("\nMedicine not found, please try again\n");
+            printf("\nWhat medicine would you like to prescribe to \n");
             scanf(" %s", med_input);
             medid = check_med(med_input);
         }
 
         // Check funktion
-        printf("Is %s the correct medicine you wish to prescribe? [y/n]\n", med_input);
+        printf("\nIs %s the correct medicine you wish to prescribe? [y/n]\n", med_input);
         scanf(" %c", &check1);
 
     } while (check1 != 'y');
 
     do { // spørge om styrke, evt. tilføje checks i forhold til grænser udfra database med bestemt medicin
-        printf("What dosage of %s would you like to prescribe? (in mg)\n", med_input);
+        printf("\nWhat dosage of %s would you like to prescribe? (in mg)\n", med_input);
         scanf(" %d", &dosis);
 
         // Check funktion
-        printf("Is %d mg the correct dosage of %s you wish to prescribe? [y/n]\n", dosis, med_input);
+        printf("\nIs %d mg the correct dosage of %s you wish to prescribe? [y/n]\n", dosis, med_input);
         scanf(" %c", &check2);
 
 
@@ -46,11 +46,10 @@ void medicin() {
 
     //char times[frek][6];
     do { // Spørge om frekvensen
-        printf("How many times a day do you wish the patient to take %s with the dosage of %d mg\n", med_input, dosis);
+        printf("\nHow many times a day do you wish for the patient to take %d mg %s?\n", dosis, med_input);
         scanf(" %d", &frek);
         // Check funktion
-        printf("Is it correct that you wish the patient takes %s %d time(s) a day with the dosage of %d mg? [y/n]\n",
-               med_input, frek, dosis);
+        printf("\nIs it correct that you want the patient to take %d mg of %s %d time(s) a day? [y/n]\n", dosis, med_input, frek);
         scanf(" %c", &check3);
 
     } while (check3 != 'y');
@@ -93,11 +92,11 @@ void medicin() {
     }*/
     do {
         // spørger om beskrivelsen
-        printf("State your description of when and how the patient should take %s:\n", med_input);
+        printf("\nstate your description of when and how the patient should take %s:\n", med_input);
         getchar();
         fgets(desk, 250, stdin);
         // Check funktion
-        printf("Is the following description correct: %s [y/n]\n", desk);
+        printf("\nIs the following description correct: %s [y/n]\n", desk);
         scanf(" %c", &check7);
     } while (check7 != 'y');
 
