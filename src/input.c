@@ -19,15 +19,15 @@ int main(void) {
     char valg;
 
     do {
-        printf("\nSkriv i for at oprette recept\n");
-        printf("Skriv s for at slette recept\n");
-        printf("Skriv r for at se aktuelle recepter\n");
-        printf("Skriv q for at afslutte program\n");
+        printf("\nType i to create a prescription\n");
+        printf("Type s to delete a prescription\n");
+        printf("Type r to view existing prescription(s)\n");
+        printf("Type q to exit program\n");
 
         scanf(" %c", &valg);
         if (valg == 'r') {
             //print_recepts funktion kaldes - Loopet skal være i selve funktionen senere hen
-            printf("\nNavn: %s | CPR: %s\n", cur.name, cur.cpr);
+            printf("\nName: %s | CPR: %s\n", cur.name, cur.cpr);
             int width = getTerminalWidth();
             char symbol = '_';
             for (int i = 0; i < width; i++) {
@@ -46,10 +46,10 @@ int main(void) {
         else if (valg == 's') {
             int sletvalg;
             if (antalrecepts == 0) {
-                printf("Der findes ikke nogle recepter under den valgte patients navn.\n");
+                printf("There is no existing prescriptions prescribed to the chosen patient\n");
             }
             else {
-                printf("\nNavn: %s | CPR: %s\n", cur.name, cur.cpr);
+                printf("\nName: %s | CPR: %s\n", cur.name, cur.cpr);
                 int width = getTerminalWidth();
                 char symbol = '_';
                 for (int i = 0; i < width; i++) {
@@ -59,7 +59,7 @@ int main(void) {
                     print_recept(i+1, recepts[i].medname, recepts[i].notes, recepts[i].dosage, recepts[i].frequency);
                     printf("\n");
                 }
-                printf("\nHvilken recept ønsker du at slette? Indtast nummeret:\n");
+                printf("\nWhich prescription do you wish to delete? Type the registration number:\n");
             }
             scanf(" %d", &sletvalg);
             delete_recept(sletvalg-1);
@@ -91,18 +91,18 @@ char* load_patient() {
         strcpy(cur.name, "NULL");
         cur.weight = 0;
 
-        printf("Indtast CPR-nummer på patienten> \n");
+        printf("Type the patients CPR-Number: \n");
         scanf(" %s", cpr);
         sprintf(sql, "SELECT * FROM patients WHERE cpr = '%s'", cpr);
 
         sqlite3_exec(db, sql, person_callback, 0, &err_msg);
 
         if(strcmp(cur.cpr, "NULL") == 0){
-            printf("Fejlagtigt CPR-Nummer\n");
+            printf("Invalid CPR-Number\n");
         }
 
         else{
-            printf("Er patientens navn %s og CPR-nummer %s korrekt? [y/n]\n", cur.name, cur.cpr);
+            printf("Is the patients name: %s and CPR-Number: %s correct? [y/n]\n", cur.name, cur.cpr);
             scanf(" %c", &svar);
         }
 
@@ -113,7 +113,7 @@ char* load_patient() {
 
     sqlite3_close(db);
 
-    printf("\nValgte patient er: %s\n", cur.name);
+    printf("\nChosen patient is: %s\n", cur.name);
     return cur.cpr;
 }
 
