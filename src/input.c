@@ -39,7 +39,7 @@ int main(void) {
             printf("\n");
         }
         else if (valg == 'c') {
-            medicin();
+            medicin(cur.name);
             print_recept(antalrecepts-1, recepts[antalrecepts-1].medname, recepts[antalrecepts-1].notes, recepts[antalrecepts-1].dosage, recepts[antalrecepts-1].frequency);
             printf("\n");
         }
