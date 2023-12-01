@@ -19,13 +19,13 @@ int main(void) {
     char valg;
 
     do {
-        printf("\nType i to create a prescription\n");
-        printf("Type s to delete a prescription\n");
-        printf("Type r to view existing prescription(s)\n");
-        printf("Type q to exit program\n");
+        printf("\nType c to create a prescription\n");
+        printf("Type d to delete a prescription\n");
+        printf("Type v to view existing prescription(s)\n");
+        printf("Type q to quit program\n");
 
         scanf(" %c", &valg);
-        if (valg == 'r') {
+        if (valg == 'v') {
             //print_recepts funktion kaldes - Loopet skal være i selve funktionen senere hen
             printf("\nName: %s | CPR: %s\n", cur.name, cur.cpr);
             int width = getTerminalWidth();
@@ -38,12 +38,12 @@ int main(void) {
             }
             printf("\n");
         }
-        else if (valg == 'i') {
+        else if (valg == 'c') {
             medicin();
             print_recept(antalrecepts-1, recepts[antalrecepts-1].medname, recepts[antalrecepts-1].notes, recepts[antalrecepts-1].dosage, recepts[antalrecepts-1].frequency);
             printf("\n");
         }
-        else if (valg == 's') {
+        else if (valg == 'd') {
             int sletvalg;
             if (antalrecepts == 0) {
                 printf("There is no existing prescriptions prescribed to the chosen patient\n");
