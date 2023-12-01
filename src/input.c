@@ -18,14 +18,14 @@ int main(void) {
     char* cpr = load_patient();
     char valg;
 
-    do {
+    do { // forskellige muligheder i programmet
         printf("\nType c to create a prescription\n");
         printf("Type d to delete a prescription\n");
         printf("Type v to view existing prescription(s)\n");
         printf("Type q to quit program\n");
 
         scanf(" %c", &valg);
-        if (valg == 'v') {
+        if (valg == 'v') { // se eksisterende recepter
             printf("\nName: %s | CPR: %s\n", cur.name, cur.cpr);
             int width = getTerminalWidth();
             char symbol = '_';
@@ -37,12 +37,12 @@ int main(void) {
             }
             printf("\n");
         }
-        else if (valg == 'c') {
+        else if (valg == 'c') { //lave en ny recept
             medicin(cur.name);
             print_recept(antalrecepts-1, recepts[antalrecepts-1].medname, recepts[antalrecepts-1].notes, recepts[antalrecepts-1].dosage, recepts[antalrecepts-1].frequency);
             printf("\n");
         }
-        else if (valg == 'd') {
+        else if (valg == 'd') { //slet en eksisterende recept
             int sletvalg;
             if (antalrecepts == 0) {
                 printf("There is no existing prescriptions prescribed to the chosen patient\n");
@@ -69,7 +69,7 @@ int main(void) {
             }
         }
 
-    } while (valg != 'q');
+    } while (valg != 'q'); // lukke programmet
 
     free(recepts);
     return 0;
@@ -104,7 +104,7 @@ char* load_patient() {
             printf("\nInvalid CPR-Number\n");
         }
 
-        else{
+        else{ // check
             printf("Is the patients name: %s and CPR-Number: %s correct? [y/n]\n", cur.name, cur.cpr);
             scanf(" %c", &svar);
         }
