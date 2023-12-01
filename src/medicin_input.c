@@ -92,7 +92,7 @@ void medicin() {
     }*/
     do {
         // spørger om beskrivelsen
-        printf("\nstate your description of when and how the patient should take %s:\n", med_input);
+        printf("\nState your description of when and how the patient should take %s:\n", med_input);
         getchar();
         fgets(desk, 250, stdin);
         // Check funktion
