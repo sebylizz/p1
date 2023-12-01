@@ -4,7 +4,7 @@
 #include <sys/ioctl.h>
 #include <unistd.h>
 
-void medicin() {
+void medicin(char* name) {
 
     char check1, check2, check3, check5, check6, check7;
     int check4;
@@ -16,7 +16,7 @@ void medicin() {
     do {
         // Spørge om medicin
         // Skal kobles sammen med første input funktion så der spørges om navnet herunder //
-        printf("\nWhat medicine would you like to prescribe to \n");
+        printf("\nWhat medicine would you like to prescribe to %s\n", name);
         scanf(" %s", med_input);
         medid = check_med(med_input);
 
@@ -112,7 +112,7 @@ void print_recept(int tempid, char* mednavn, char* besk, int styrke, int frek) {
            for (int i = strlen(mednavn); i < 12; i++){
                printf(" ");
            }
-           printf("| Styrke: %d mg", styrke);
+           printf("| Styrke: %d mg/dose", styrke);
            char temp[5];
            sprintf(temp, "%d", styrke);
            for (int i = strlen(temp); i < 4; i++){
