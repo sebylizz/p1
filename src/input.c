@@ -30,12 +30,12 @@ int main(void) {
             printf("\nNavn: %s | CPR: %s\n", cur.name, cur.cpr);
             printf("__________________________________________________\n");
             for (int i = 0; i < antalrecepts; i++) {
-                print_recept(i+1, recepts[i].medname, recepts[i].notes, recepts[i].dosage);
+                print_recept(i+1, recepts[i].medname, recepts[i].notes, recepts[i].dosage, recepts[i].frequency);
             }
         }
         else if (valg == 'i') {
             medicin();
-            print_recept(antalrecepts-1, recepts[antalrecepts-1].medname, recepts[antalrecepts-1].notes, recepts[antalrecepts-1].dosage);
+            print_recept(antalrecepts-1, recepts[antalrecepts-1].medname, recepts[antalrecepts-1].notes, recepts[antalrecepts-1].dosage, recepts[antalrecepts-1].frequency);
         }
         else if (valg == 's') {
             int sletvalg;
@@ -46,7 +46,7 @@ int main(void) {
                 printf("\nNavn: %s | CPR: %s\n", cur.name, cur.cpr);
                 printf("__________________________________________________\n");
                 for (int i = 0; i < antalrecepts; i++) {
-                    print_recept(i+1, recepts[i].medname, recepts[i].notes, recepts[i].dosage);
+                    print_recept(i+1, recepts[i].medname, recepts[i].notes, recepts[i].dosage, recepts[i].frequency);
                 }
                 printf("\nHvilken recept ønsker du at slette? Indtast nummeret:\n");
             }
@@ -141,7 +141,6 @@ int recept_callback(void *NotUsed, int argc, char **argv, char **azColName) {
 
 int medicine_callback(void *NotUsed, int argc, char **argv, char **azColName){
     medid = atoi(argv[0]);
-    printf("%d\n", medid);
     return 0;
 }
 
