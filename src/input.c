@@ -58,11 +58,15 @@ int main(void) {
                     print_recept(i+1, recepts[i].medname, recepts[i].notes, recepts[i].dosage, recepts[i].frequency);
                     printf("\n");
                 }
-                printf("\nWhich prescription do you wish to delete? Type the registration number:\n");
+                char check_sletvalg;
+                do {
+                    printf("\nWhich prescription do you wish to delete? Type the registration number:\n");
+                    scanf(" %d", &sletvalg);
+                    printf("\nIs it correct that you want to delete prescription %d? [y/n]\n", sletvalg);
+                    scanf(" %c", &check_sletvalg);
+                } while (check_sletvalg != 'y');
+                delete_recept(sletvalg-1);
             }
-            scanf(" %d", &sletvalg);
-            delete_recept(sletvalg-1);
-            // indsæt sletfunktion sammenkoblet med "sletvalg"
         }
 
     } while (valg != 'q');
@@ -90,14 +94,14 @@ char* load_patient() {
         strcpy(cur.name, "NULL");
         cur.weight = 0;
 
-        printf("Type the patients CPR-Number: \n");
+        printf("\nType the patients CPR-Number: \n");
         scanf(" %s", cpr);
         sprintf(sql, "SELECT * FROM patients WHERE cpr = '%s'", cpr);
 
         sqlite3_exec(db, sql, person_callback, 0, &err_msg);
 
         if(strcmp(cur.cpr, "NULL") == 0){
-            printf("Invalid CPR-Number\n");
+            printf("\nInvalid CPR-Number\n");
         }
 
         else{
