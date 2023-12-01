@@ -106,19 +106,19 @@ void medicin(char* name) {
 // printning af recept
 void print_recept(int tempid, char* mednavn, char* besk, int styrke, int frek) {
 
-    printf("Recept #%d", tempid);
+    printf("Prescription #%d", tempid);
 
-    printf(" | Medicin: %s", mednavn);
+    printf(" | Medicine: %s", mednavn);
            for (int i = strlen(mednavn); i < 12; i++){
                printf(" ");
            }
-           printf("| Styrke: %d mg/dose", styrke);
+           printf("| Strength: %d mg/dose", styrke);
            char temp[5];
            sprintf(temp, "%d", styrke);
            for (int i = strlen(temp); i < 4; i++){
                printf(" ");
            }
-           printf(" | Frekvens: %d gang(e) om dagen \nBeskrivelse: %s \n",frek, besk);
+           printf(" | Frequency: %d time(s) a day \nDescription: %s \n",frek, besk);
 
     // Printer linjer mellem recepter
     int width = getTerminalWidth();
