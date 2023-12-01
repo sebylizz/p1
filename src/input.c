@@ -26,7 +26,6 @@ int main(void) {
 
         scanf(" %c", &valg);
         if (valg == 'v') {
-            //print_recepts funktion kaldes - Loopet skal være i selve funktionen senere hen
             printf("\nName: %s | CPR: %s\n", cur.name, cur.cpr);
             int width = getTerminalWidth();
             char symbol = '_';
