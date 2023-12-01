@@ -95,14 +95,14 @@ char* load_patient() {
         strcpy(cur.name, "NULL");
         cur.weight = 0;
 
-        printf("Type the patients CPR-Number: \n");
+        printf("\nType the patients CPR-Number: \n");
         scanf(" %s", cpr);
         sprintf(sql, "SELECT * FROM patients WHERE cpr = '%s'", cpr);
 
         sqlite3_exec(db, sql, person_callback, 0, &err_msg);
 
         if(strcmp(cur.cpr, "NULL") == 0){
-            printf("Invalid CPR-Number\n");
+            printf("\nInvalid CPR-Number\n");
         }
 
         else{
