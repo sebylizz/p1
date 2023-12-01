@@ -16,7 +16,7 @@ void medicin(char* name) {
     do {
         // Spørge om medicin
         // Skal kobles sammen med første input funktion så der spørges om navnet herunder //
-        printf("\nWhat medicine would you like to prescribe to %s\n", name);
+        printf("\nWhat medicine would you like to prescribe to %s?\n", name);
         scanf(" %s", med_input);
         medid = check_med(med_input);
 
