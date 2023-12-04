@@ -22,6 +22,7 @@ int main(void) {
         printf("\nType c to create a prescription\n");
         printf("Type d to delete a prescription\n");
         printf("Type v to view existing prescription(s)\n");
+        printf("Type h to view patient medical history\n");
         printf("Type q to quit program\n");
 
         scanf(" %c", &valg);
@@ -36,6 +37,10 @@ int main(void) {
                 print_recept(i+1, recepts[i].medname, recepts[i].notes, recepts[i].dosage, recepts[i].frequency);
             }
             printf("\n");
+        }
+        else if (valg == 'h') { //print tidligere recepter (Slettede)
+
+
         }
         else if (valg == 'c') { //lave en ny recept
             medicin(cur.name);
@@ -200,8 +205,13 @@ void delete_recept(int valg){
     int rc = sqlite3_open("sql/p1data.db", &db);
 
     char sql[250];
+
+    sprintf(sql, "INSERT INTO delrecepts SELECT * FROM patmed WHERE rid = %d", recepts[valg].rid);
+    sqlite3_exec(db, sql, NULL, 0, &err_msg);
+
     sprintf(sql, "DELETE FROM patmed WHERE rid = %d", recepts[valg].rid);
     sqlite3_exec(db, sql, NULL, 0, &err_msg);
+
     antalrecepts = 0;
     free(recepts);
     recepts = NULL;
@@ -210,3 +220,4 @@ void delete_recept(int valg){
 
     sqlite3_close(db);
 }
+
