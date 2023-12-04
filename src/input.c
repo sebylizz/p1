@@ -43,7 +43,7 @@ int main(void) {
             printf("\n");
         }
         else if (valg == 'd') { //slet en eksisterende recept
-            int sletvalg;
+            char sletvalg;
             if (antalrecepts == 0) {
                 printf("There is no existing prescriptions prescribed to the chosen patient\n");
             }
@@ -61,11 +61,21 @@ int main(void) {
                 char check_sletvalg;
                 do {
                     printf("\nWhich prescription do you wish to delete? Type the registration number:\n");
-                    scanf(" %d", &sletvalg);
-                    printf("\nIs it correct that you want to delete prescription %d? [y/n]\n", sletvalg);
-                    scanf(" %c", &check_sletvalg);
+                    printf("Type 'q' if you do not wish to delete a prescription\n");
+                    scanf(" %c", &sletvalg);
+                    if (sletvalg == 'q' ){
+                        break;
+                    }
+                    else {
+                        printf("\nIs it correct that you want to delete prescription %c? [y/n]\n", sletvalg);
+                        scanf(" %c", &check_sletvalg);
+                    }
                 } while (check_sletvalg != 'y');
-                delete_recept(sletvalg-1);
+                if (sletvalg != 'q') {
+                    int sletvalg_d = (sletvalg - '0') - 1;
+                        delete_recept( (sletvalg_d));
+                }
+
             }
         }
 
