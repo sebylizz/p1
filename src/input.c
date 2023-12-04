@@ -18,14 +18,14 @@ int main(void) {
     char* cpr = load_patient();
     char valg;
 
-    do {
+    do { // forskellige muligheder i programmet
         printf("\nType c to create a prescription\n");
         printf("Type d to delete a prescription\n");
         printf("Type v to view existing prescription(s)\n");
         printf("Type q to quit program\n");
 
         scanf(" %c", &valg);
-        if (valg == 'v') {
+        if (valg == 'v') { // se eksisterende recepter
             printf("\nName: %s | CPR: %s\n", cur.name, cur.cpr);
             int width = getTerminalWidth();
             char symbol = '_';
@@ -37,13 +37,13 @@ int main(void) {
             }
             printf("\n");
         }
-        else if (valg == 'c') {
+        else if (valg == 'c') { //lave en ny recept
             medicin(cur.name);
             print_recept(antalrecepts-1, recepts[antalrecepts-1].medname, recepts[antalrecepts-1].notes, recepts[antalrecepts-1].dosage, recepts[antalrecepts-1].frequency);
             printf("\n");
         }
-        else if (valg == 'd') {
-            int sletvalg;
+        else if (valg == 'd') { //slet en eksisterende recept
+            char sletvalg;
             if (antalrecepts == 0) {
                 printf("There is no existing prescriptions prescribed to the chosen patient\n");
             }
@@ -61,15 +61,25 @@ int main(void) {
                 char check_sletvalg;
                 do {
                     printf("\nWhich prescription do you wish to delete? Type the registration number:\n");
-                    scanf(" %d", &sletvalg);
-                    printf("\nIs it correct that you want to delete prescription %d? [y/n]\n", sletvalg);
-                    scanf(" %c", &check_sletvalg);
+                    printf("Type 'q' if you do not wish to delete a prescription\n");
+                    scanf(" %c", &sletvalg);
+                    if (sletvalg == 'q' ){
+                        break;
+                    }
+                    else {
+                        printf("\nIs it correct that you want to delete prescription %c? [y/n]\n", sletvalg);
+                        scanf(" %c", &check_sletvalg);
+                    }
                 } while (check_sletvalg != 'y');
-                delete_recept(sletvalg-1);
+                if (sletvalg != 'q') {
+                    int sletvalg_d = (sletvalg - '0') - 1;
+                        delete_recept( (sletvalg_d));
+                }
+
             }
         }
 
-    } while (valg != 'q');
+    } while (valg != 'q'); // lukke programmet
 
     free(recepts);
     return 0;
@@ -104,7 +114,7 @@ char* load_patient() {
             printf("\nInvalid CPR-Number\n");
         }
 
-        else{
+        else{ // check
             printf("Is the patients name: %s and CPR-Number: %s correct? [y/n]\n", cur.name, cur.cpr);
             scanf(" %c", &svar);
         }
