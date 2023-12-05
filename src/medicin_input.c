@@ -6,7 +6,7 @@
 
 void medicin(char* name) {
 
-    char check1, check2, check3, check5, check6, check7;
+    char check1, check2, check3, check5, check6, check7, check8;
     int check4;
     int dosis, frek, medid;
     char med_input[20];
@@ -33,7 +33,7 @@ void medicin(char* name) {
 
     } while (check1 != 'y');
 
-    do { // spørge om styrke, evt. tilføje checks i forhold til grænser udfra database med bestemt medicin
+    her: do { // spørge om styrke, evt. tilføje checks i forhold til grænser udfra database med bestemt medicin
         printf("\nWhat dosage of %s would you like to prescribe? (in mg)\n", med_input);
         scanf(" %d", &dosis);
 
@@ -42,6 +42,16 @@ void medicin(char* name) {
         scanf(" %c", &check2);
 
     } while (check2 != 'y');
+
+    int max = check_med_max(med_input);
+    if (dosis > max){
+        printf("\n%s with the dosage of %d is dangerous, want to proceed? [y/n]\n", med_input, dosis);
+        scanf(" %c", &check8);
+
+        if (check8 == 'n') {
+            goto her;
+        }
+    }
 
     //char times[frek][6];
     do { // Spørge om frekvensen

@@ -22,4 +22,5 @@ void medicin(char* name);
 void insert_recept(int medid, int dosis, int frek, char desk[250]);
 void delete_recept(int valg);
 int check_med(char med_input[20]);
+int check_med_max(char med_input[20]);
 int getTerminalWidth();
