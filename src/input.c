@@ -49,7 +49,7 @@ int main(void) {
             for (int i = 0; i < width; i++) {
                 printf("%c", symbol);
             }
-            print_recept(antalrecepts-1, recepts[antalrecepts-1].medname, recepts[antalrecepts-1].notes, recepts[antalrecepts-1].dosage, recepts[antalrecepts-1].frequency);
+            print_recept(antalrecepts, recepts[antalrecepts-1].medname, recepts[antalrecepts-1].notes, recepts[antalrecepts-1].dosage, recepts[antalrecepts-1].frequency);
             printf("\n");
         }
         else if (valg == 'd') { //slet en eksisterende recept

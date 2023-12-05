@@ -45,7 +45,7 @@ void medicin(char* name) {
 
     int max = check_med_max(med_input);
     if (dosis > max){
-        printf("\n%s with the dosage of %d is dangerous, want to proceed? [y/n]\n", med_input, dosis);
+        printf("\n%s with the dosage of %d mg is dangerous, want to proceed? [y/n]\n", med_input, dosis);
         scanf(" %c", &check8);
 
         if (check8 == 'n') {
