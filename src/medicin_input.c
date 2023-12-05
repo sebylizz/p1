@@ -41,17 +41,17 @@ void medicin(char* name) {
         printf("\nIs %d mg the correct dosage of %s you wish to prescribe? [y/n]\n", dosis, med_input);
         scanf(" %c", &check2);
 
-        int max = check_med_max(med_input);
-        if (dosis > max){
-            printf("\n%s with the dosage of %d is dangerous, want to proceed? [y/n]\n", med_input, dosis);
-            scanf(" %c", &check8);
-
-            if (check8 == 'n') {
-                goto her;
-            }
-        }
-
     } while (check2 != 'y');
+
+    int max = check_med_max(med_input);
+    if (dosis > max){
+        printf("\n%s with the dosage of %d is dangerous, want to proceed? [y/n]\n", med_input, dosis);
+        scanf(" %c", &check8);
+
+        if (check8 == 'n') {
+            goto her;
+        }
+    }
 
     //char times[frek][6];
     do { // Spørge om frekvensen
