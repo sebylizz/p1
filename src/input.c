@@ -170,7 +170,7 @@ void login(){
         } else if (svar == 'p') {
             nurse();
         }
-    } while (svar != 'c' || svar != 'p');
+    } while (svar != 'd' || svar != 'p');
 
 }
 
