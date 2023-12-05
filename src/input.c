@@ -226,3 +226,14 @@ void delete_recept(int valg){
     sqlite3_close(db);
 }
 
+int check_med_max(char med_input[20]){
+
+    char sql[250];
+
+    medid = 0;
+    sprintf(sql, "SELECT max FROM medicine WHERE LOWER(medicine) = LOWER('%s')", med_input);
+    sqlite3_exec(db, sql, medicine_callback, 0, &err_msg);
+
+    return medid;
+
+}
