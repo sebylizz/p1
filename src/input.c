@@ -230,3 +230,4 @@ int check_med_max(char med_input[20]){ //shit code here
     return medid;
 
 }
+
