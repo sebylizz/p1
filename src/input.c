@@ -22,82 +22,7 @@ int main(void) {
         exit(EXIT_FAILURE);
     }
 
-    load_patient();
-
-    char valg;
-
-    do { // forskellige muligheder i programmet
-        printf("\nType c to create a prescription\n");
-        printf("Type d to delete a prescription\n");
-        printf("Type v to view existing prescription(s)\n");
-        printf("Type h to view patient medical history\n");
-        printf("Type q to quit program\n");
-
-        scanf(" %c", &valg);
-        if (valg == 'v') { // se eksisterende recepter
-            printf("\nName: %s | CPR: %s\n", cur.name, cur.cpr);
-            int width = getTerminalWidth();
-            char symbol = '_';
-            for (int i = 0; i < width; i++) {
-                printf("%c", symbol);
-            }
-            for (int i = 0; i < antalrecepts; i++) {
-                print_recept(i+1, recepts[i].medname, recepts[i].notes, recepts[i].dosage, recepts[i].frequency);
-            }
-            printf("\n");
-        }
-        else if (valg == 'h') { //print tidligere recepter (Slettede)
-
-
-        }
-        else if (valg == 'c') { //lave en ny recept
-            medicin(cur.name);
-            int width = getTerminalWidth();
-            char symbol = '-';
-            for (int i = 0; i < width; i++) {
-                printf("%c", symbol);
-            }
-            print_recept(antalrecepts, recepts[antalrecepts-1].medname, recepts[antalrecepts-1].notes, recepts[antalrecepts-1].dosage, recepts[antalrecepts-1].frequency);
-            printf("\n");
-        }
-        else if (valg == 'd') { //slet en eksisterende recept
-            char sletvalg;
-            if (antalrecepts == 0) {
-                printf("There is no existing prescriptions prescribed to the chosen patient\n");
-            }
-            else {
-                printf("\nName: %s | CPR: %s\n", cur.name, cur.cpr);
-                int width = getTerminalWidth();
-                char symbol = '_';
-                for (int i = 0; i < width; i++) {
-                    printf("%c", symbol);
-                }
-                for (int i = 0; i < antalrecepts; i++) {
-                    print_recept(i+1, recepts[i].medname, recepts[i].notes, recepts[i].dosage, recepts[i].frequency);
-                    printf("\n");
-                }
-                char check_sletvalg;
-                do {
-                    printf("\nWhich prescription do you wish to delete? Type the registration number:\n");
-                    printf("Type 'q' if you do not wish to delete a prescription\n");
-                    scanf(" %c", &sletvalg);
-                    if (sletvalg == 'q' ){
-                        break;
-                    }
-                    else {
-                        printf("\nIs it correct that you want to delete prescription %c? [y/n]\n", sletvalg);
-                        scanf(" %c", &check_sletvalg);
-                    }
-                } while (check_sletvalg != 'y');
-                if (sletvalg != 'q') {
-                    int sletvalg_d = (sletvalg - '0') - 1;
-                        delete_recept( (sletvalg_d));
-                }
-
-            }
-        }
-
-    } while (valg != 'q'); // lukke programmet
+    login();
 
     sqlite3_close(db);
     free(recepts);
@@ -231,3 +156,138 @@ int check_med_max(char med_input[20]){ //shit code here
 
 }
 
+void login(){
+
+    char svar;
+
+    do {
+
+        printf("If doctor press d, if patient, nurse, citizen etc. press p\n");
+        scanf(" %c", &svar);
+
+        if (svar == 'd') {
+            doctor();
+        } else if (svar == 'p') {
+            nurse();
+        }
+    } while (svar != 'c' || svar != 'p');
+
+}
+
+void doctor(){
+
+    load_patient();
+
+    char valg;
+
+    do { // forskellige muligheder i programmet
+        printf("\nType c to create a prescription\n");
+        printf("Type d to delete a prescription\n");
+        printf("Type v to view existing prescription(s)\n");
+        printf("Type h to view patient medical history\n");
+        printf("Type q to quit program\n");
+
+        scanf(" %c", &valg);
+        if (valg == 'v') { // se eksisterende recepter
+            printf("\nName: %s | CPR: %s\n", cur.name, cur.cpr);
+            int width = getTerminalWidth();
+            char symbol = '_';
+            for (int i = 0; i < width; i++) {
+                printf("%c", symbol);
+            }
+            for (int i = 0; i < antalrecepts; i++) {
+                print_recept(i+1, recepts[i].medname, recepts[i].notes, recepts[i].dosage, recepts[i].frequency);
+            }
+            printf("\n");
+        }
+        else if (valg == 'h') { //print tidligere recepter (Slettede)
+
+        }
+        else if (valg == 'c') { //lave en ny recept
+            medicin(cur.name);
+            int width = getTerminalWidth();
+            char symbol = '-';
+            for (int i = 0; i < width; i++) {
+                printf("%c", symbol);
+            }
+            print_recept(antalrecepts, recepts[antalrecepts-1].medname, recepts[antalrecepts-1].notes, recepts[antalrecepts-1].dosage, recepts[antalrecepts-1].frequency);
+            printf("\n");
+        }
+        else if (valg == 'd') { //slet en eksisterende recept
+            char sletvalg;
+            if (antalrecepts == 0) {
+                printf("There is no existing prescriptions prescribed to the chosen patient\n");
+            }
+            else {
+                printf("\nName: %s | CPR: %s\n", cur.name, cur.cpr);
+                int width = getTerminalWidth();
+                char symbol = '_';
+                for (int i = 0; i < width; i++) {
+                    printf("%c", symbol);
+                }
+                for (int i = 0; i < antalrecepts; i++) {
+                    print_recept(i+1, recepts[i].medname, recepts[i].notes, recepts[i].dosage, recepts[i].frequency);
+                    printf("\n");
+                }
+                char check_sletvalg;
+                do {
+                    printf("\nWhich prescription do you wish to delete? Type the registration number:\n");
+                    printf("Type 'q' if you do not wish to delete a prescription\n");
+                    scanf(" %c", &sletvalg);
+                    if (sletvalg == 'q' ){
+                        break;
+                    }
+                    else {
+                        printf("\nIs it correct that you want to delete prescription %c? [y/n]\n", sletvalg);
+                        scanf(" %c", &check_sletvalg);
+                    }
+                } while (check_sletvalg != 'y');
+                if (sletvalg != 'q') {
+                    int sletvalg_d = (sletvalg - '0') - 1;
+                    delete_recept( (sletvalg_d));
+                }
+
+            }
+        }
+
+    } while (valg != 'q'); // lukke programmet
+
+    exit(EXIT_SUCCESS);
+
+}
+
+void nurse(){
+
+    load_patient();
+
+    char valg;
+
+    do { // forskellige muligheder i programmet
+
+        printf("\nType v to view existing prescription(s)\n");
+        printf("Type h to view patient medical history\n");
+        printf("Type q to quit program\n");
+
+        scanf(" %c", &valg);
+
+        if (valg == 'v') { // se eksisterende recepter
+            printf("\nName: %s | CPR: %s\n", cur.name, cur.cpr);
+            int width = getTerminalWidth();
+            char symbol = '_';
+            for (int i = 0; i < width; i++) {
+                printf("%c", symbol);
+            }
+            for (int i = 0; i < antalrecepts; i++) {
+                print_recept(i+1, recepts[i].medname, recepts[i].notes, recepts[i].dosage, recepts[i].frequency);
+            }
+            printf("\n");
+        }
+        else if (valg == 'h') { //print tidligere recepter (Slettede)
+
+        }
+
+    } while (valg != 'q'); // lukke programmet
+
+    exit(EXIT_SUCCESS);
+
+}
