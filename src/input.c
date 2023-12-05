@@ -162,7 +162,7 @@ void login(){
 
     do {
 
-        printf("If doctor press d \nIf patient, nurse, citizen etc. press p\n");
+        printf("\nIf doctor press d \nIf patient, nurse, citizen etc. press p\n");
         scanf(" %c", &svar);
 
         if (svar == 'd') {
@@ -170,7 +170,7 @@ void login(){
         } else if (svar == 'p') {
             nurse();
         }
-    } while (svar != 'd' || svar != 'p');
+    } while (svar != 'd' && svar != 'p');
 
 }
 
