@@ -44,6 +44,11 @@ int main(void) {
         }
         else if (valg == 'c') { //lave en ny recept
             medicin(cur.name);
+            int width = getTerminalWidth();
+            char symbol = '-';
+            for (int i = 0; i < width; i++) {
+                printf("%c", symbol);
+            }
             print_recept(antalrecepts-1, recepts[antalrecepts-1].medname, recepts[antalrecepts-1].notes, recepts[antalrecepts-1].dosage, recepts[antalrecepts-1].frequency);
             printf("\n");
         }
