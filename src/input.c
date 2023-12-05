@@ -6,7 +6,8 @@
 
 person cur;
 recept *recepts = NULL;
-int antalrecepts, medid;
+delrecept *delrecepts = NULL;
+int antalrecepts, antaldelrecepts, medid;
 sqlite3 *db;
 char *err_msg = 0;
 
@@ -61,6 +62,10 @@ char* load_patient() {
     sprintf(sql, "SELECT medicine.medicine, patmed.dosage, patmed.frequency, patmed.notes, rid FROM patmed JOIN medicine ON medicine.id = patmed.id WHERE patmed.cpr = '%s'", cpr);
     sqlite3_exec(db, sql, recept_callback, 0, &err_msg);
 
+    sprintf(sql, "SELECT medicine.medicine, delrecepts.dosage, delrecepts.frequency, delrecepts.notes, rid FROM delrecepts JOIN medicine ON medicine.id = delrecepts.id WHERE delrecepts.cpr = '%s'", cpr);
+    sqlite3_exec(db, sql, delrecepts_callback, 0, &err_msg);
+
+
     printf("\nChosen patient is: %s\n", cur.name);
     return cur.cpr;
 }
@@ -97,6 +102,27 @@ int recept_callback(void *NotUsed, int argc, char **argv, char **azColName) {
 
     return 0;
 }
+
+int delrecepts_callback(void *NotUsed, int argc, char **argv, char **azColName) {
+
+    NotUsed = 0;
+
+    if (delrecepts == NULL) {
+        delrecepts = malloc(sizeof(delrecept));
+    } else {
+        delrecepts = realloc(delrecepts, (antaldelrecepts + 1) * sizeof(delrecept));
+    }
+    strcpy(delrecepts[antaldelrecepts].medname, strdup(argv[0]));
+    delrecepts[antaldelrecepts].dosage = atoi(argv[1]);
+    delrecepts[antaldelrecepts].frequency = atoi(argv[2]);
+    if(argv[3] != NULL){strcpy(delrecepts[antaldelrecepts].notes, (strdup(argv[3])));}
+    delrecepts[antaldelrecepts].rid = atoi(argv[4]);
+
+    antaldelrecepts++;
+
+    return 0;
+}
+
 
 int medicine_callback(void *NotUsed, int argc, char **argv, char **azColName){
     medid = atoi(argv[0]);
@@ -184,7 +210,7 @@ void doctor(){
         printf("\nType c to create a prescription\n");
         printf("Type d to delete a prescription\n");
         printf("Type v to view existing prescription(s)\n");
-        printf("Type h to view patient medical history\n");
+        printf("Type h to view previous prescription(s)\n");
         printf("Type q to quit program\n");
 
         scanf(" %c", &valg);
@@ -200,7 +226,17 @@ void doctor(){
             }
             printf("\n");
         }
-        else if (valg == 'h') { //print tidligere recepter (Slettede)
+        else if (valg == 'h') { //se tidligere recepter (Slettede)
+            printf("\nName: %s | CPR: %s\n", cur.name, cur.cpr);
+            int width = getTerminalWidth();
+            char symbol = '_';
+            for (int i = 0; i < width; i++) {
+                printf("%c", symbol);
+            }
+            for (int i = 0; i < antaldelrecepts; i++) {
+                print_recept(i+1, delrecepts[i].medname, delrecepts[i].notes, delrecepts[i].dosage, delrecepts[i].frequency);
+            }
+            printf("\n");
 
         }
         else if (valg == 'c') { //lave en ny recept
@@ -282,10 +318,19 @@ void nurse(){
             }
             printf("\n");
         }
-        else if (valg == 'h') { //print tidligere recepter (Slettede)
+        else if (valg == 'h') { //se tidligere recepter (Slettede)
+            printf("\nName: %s | CPR: %s\n", cur.name, cur.cpr);
+            int width = getTerminalWidth();
+            char symbol = '_';
+            for (int i = 0; i < width; i++) {
+                printf("%c", symbol);
+            }
+            for (int i = 0; i < antaldelrecepts; i++) {
+                print_recept(i+1, delrecepts[i].medname, delrecepts[i].notes, delrecepts[i].dosage, delrecepts[i].frequency);
+            }
+            printf("\n");
 
         }
-
     } while (valg != 'q'); // lukke programmet
 
     exit(EXIT_SUCCESS);

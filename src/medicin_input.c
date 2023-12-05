@@ -33,7 +33,7 @@ void medicin(char* name) {
 
     } while (check1 != 'y');
 
-    her: do { // spørge om styrke, evt. tilføje checks i forhold til grænser udfra database med bestemt medicin
+    here: do { // spørge om styrke, evt. tilføje checks i forhold til grænser udfra database med bestemt medicin
         printf("\nWhat dosage of %s would you like to prescribe? (in mg)\n", med_input);
         scanf(" %d", &dosis);
 
@@ -49,7 +49,7 @@ void medicin(char* name) {
         scanf(" %c", &check8);
 
         if (check8 == 'n') {
-            goto her;
+            goto here;
         }
     }
 
