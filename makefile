@@ -1,3 +1,3 @@
 default:
-	gcc -o input src/input.c src/medicin_input.c sql/sqlite3.c
+	gcc -o input src/main.c src/helpers.c sql/sqlite3.c
 	./input

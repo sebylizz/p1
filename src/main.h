@@ -20,18 +20,18 @@ typedef struct{
     char notes[200];
 } delrecept;
 
+void medicin(char* name);
+void load_patient();
+void login();
+void doctor();
+void nurse();
+
 int person_callback(void *, int, char **, char **);
 int recept_callback(void *, int, char **, char **);
 int delrecepts_callback(void *, int, char **, char **);
 int medicine_callback(void *, int, char **, char **);
-char* load_patient();
-void print_recept(int tempid, char* mednavn, char* besk, int styrke, int frek);
-void medicin(char* name);
-void insert_recept(int medid, int dosis, int frek, char desk[250]);
-void delete_recept(int valg);
+
 int check_med(char med_input[20]);
 int check_med_max(char med_input[20]);
-void login();
-void doctor();
-void nurse();
-int getTerminalWidth();
+void insert_recept(int medid, int dosis, int frek, char desk[250]);
+void delete_recept(int valg);
