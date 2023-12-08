@@ -183,7 +183,8 @@ void medicin(char* name) {
 
     char check1, check2, check3, check5, check6, check7, check8;
     int check4;
-    int dosis, frek, medid;
+    int frek, medid;
+    float dosis;
     char med_input[20];
     char desk[250];
     char s_time;
@@ -210,10 +211,10 @@ void medicin(char* name) {
 
     here: do { // spørge om styrke, evt. tilføje checks i forhold til grænser udfra database med bestemt medicin
         printf("\nWhat dosage of %s would you like to prescribe? (in mg)\n", med_input);
-        scanf(" %d", &dosis);
+        scanf(" %f", &dosis);
 
         // Check funktion
-        printf("\nIs %d mg the correct dosage of %s you wish to prescribe? [y/n]\n", dosis, med_input);
+        printf("\nIs %.2f mg the correct dosage of %s you wish to prescribe? [y/n]\n", dosis, med_input);
         scanf(" %c", &check2);
 
     } while (check2 != 'y');
@@ -221,7 +222,7 @@ void medicin(char* name) {
     int max = check_med_max(med_input);
     if (dosis > max){
         textColor('r');
-        printf("\n%s with the dosage of %d mg is dangerous, want to proceed? [y/n]\n", med_input, dosis);
+        printf("\n%s with the dosage of %.2f mg is dangerous, want to proceed? [y/n]\n", med_input, dosis);
         textColor('w');
         scanf(" %c", &check8);
 
@@ -232,10 +233,10 @@ void medicin(char* name) {
 
     //char times[frek][6];
     do { // Spørge om frekvensen
-        printf("\nHow many times a day do you wish for the patient to take %d mg %s?\n", dosis, med_input);
+        printf("\nHow many times a day do you wish for the patient to take %.2f mg %s?\n", dosis, med_input);
         scanf(" %d", &frek);
         // Check funktion
-        printf("\nIs it correct that you want the patient to take %d mg of %s %d time(s) a day? [y/n]\n", dosis, med_input, frek);
+        printf("\nIs it correct that you want the patient to take %.2f mg of %s %d time(s) a day? [y/n]\n", dosis, med_input, frek);
         scanf(" %c", &check3);
 
     } while (check3 != 'y');
@@ -302,9 +303,9 @@ int check_med(char med_input[20]){
     return medid;
 }
 
-void insert_recept(int medid, int dosis, int frek, char desk[250]){
+void insert_recept(int medid, double dosis, int frek, char desk[250]){
     char sql[250];
-    sprintf(sql, "INSERT INTO patmed(cpr, id, dosage, frequency, notes) VALUES('%s', %d, %d, %d, '%s')", cur.cpr, medid, dosis, frek, desk);
+    sprintf(sql, "INSERT INTO patmed(cpr, id, dosage, frequency, notes) VALUES('%s', %d, %f, %d, '%s')", cur.cpr, medid, dosis, frek, desk);
     sqlite3_exec(db, sql, NULL, 0, &err_msg);
 
     antalrecepts = 0;
