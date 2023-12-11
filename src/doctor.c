@@ -47,16 +47,21 @@ void doctor(){
 
         scanf(" %c", &valg);
         if (valg == 'v') { // se eksisterende recepter
-            printf("\nName: %s | CPR: %s\n", cur.name, cur.cpr);
-            int width = getTerminalWidth();
-            char symbol = '_';
-            for (int i = 0; i < width; i++) {
-                printf("%c", symbol);
+            if (antalrecepts == 0) {
+                printf("There is no existing prescriptions prescribed to the chosen patient\n");
             }
-            for (int i = 0; i < antalrecepts; i++) {
-                print_recept(i+1, recepts[i].medname, recepts[i].notes, recepts[i].dosage, recepts[i].frequency);
+            else {
+                printf("\nName: %s | CPR: %s\n", cur.name, cur.cpr);
+                int width = getTerminalWidth();
+                char symbol = '_';
+                for (int i = 0; i < width; i++) {
+                    printf("%c", symbol);
+                }
+                for (int i = 0; i < antalrecepts; i++) {
+                    print_recept(i+1, recepts[i].medname, recepts[i].notes, recepts[i].dosage, recepts[i].frequency);
+                }
+                printf("\n");
             }
-            printf("\n");
         }
         else if (valg == 'h') { //se tidligere recepter (Slettede)
             printf("\nName: %s | CPR: %s\n", cur.name, cur.cpr);
