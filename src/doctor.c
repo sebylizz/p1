@@ -253,7 +253,7 @@ void medicin() {
         scanf(" %f", &dosis);
 
         // Check funktion
-        printf("\nIs %f mg the correct dosage of %s you wish to prescribe? [y/n]\n", dosis, med_input);
+        printf("\nIs %.1f mg the correct dosage of %s you wish to prescribe? [y/n]\n", dosis, med_input);
         scanf(" %c", &check2);
 
     } while (check2 != 'y');
@@ -261,7 +261,7 @@ void medicin() {
     int max = check_med_max(med_input);
     if (dosis > max){
         textColor('r');
-        printf("\n%s with the dosage of %f mg is dangerous, want to proceed? [y/n]\n", med_input, dosis);
+        printf("\n%s with the dosage of %.1f mg is dangerous, want to proceed? [y/n]\n", med_input, dosis);
         textColor('w');
         scanf(" %c", &check8);
         if (check8 == 'n') {
@@ -271,10 +271,10 @@ void medicin() {
 
     //char times[frek][6];
     do { // Spørge om frekvensen
-        printf("\nHow many times a day do you wish for the patient to take %f mg %s?\n", dosis, med_input);
+        printf("\nHow many times a day do you wish for the patient to take %.1f mg %s?\n", dosis, med_input);
         scanf(" %d", &frek);
         // Check funktion
-        printf("\nIs it correct that you want the patient to take %f mg of %s %d time(s) a day? [y/n]\n", dosis, med_input, frek);
+        printf("\nIs it correct that you want the patient to take %.1f mg of %s %d time(s) a day? [y/n]\n", dosis, med_input, frek);
         scanf(" %c", &check3);
 
     } while (check3 != 'y');
