@@ -6,7 +6,7 @@
 #include <unistd.h>
 
 // printning af recept
-void print_recept(int tempid, char* mednavn, char* besk, int styrke, int frek) {
+void print_recept(int tempid, char* mednavn, char* besk, float styrke, int frek) {
 
     printf("Prescription #%d", tempid);
 
@@ -14,10 +14,10 @@ void print_recept(int tempid, char* mednavn, char* besk, int styrke, int frek) {
            for (int i = strlen(mednavn); i < 12; i++){
                printf(" ");
            }
-           printf("| Strength: %d mg/dose", styrke);
-           char temp[5];
-           sprintf(temp, "%d", styrke);
-           for (int i = strlen(temp); i < 4; i++){
+           printf("| Strength: %.1f mg/dose", styrke);
+           char temp[11];
+           sprintf(temp, "%.1f", styrke);
+           for (int i = strlen(temp); i < 10; i++){
                printf(" ");
            }
            printf(" | Frequency: %d time(s) a day \nDescription: %s \n",frek, besk);
