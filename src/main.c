@@ -14,11 +14,11 @@ int main(void) {
 void login(){
     char svar;
     do {
-        //textColor('b');
+        textColor('b');
         printf("\nIf doctor press d \n");
-        //textColor('y');
+        textColor('y');
         printf("If patient, nurse, citizen etc. press p\n");
-        //textColor('w');
+        textColor('w');
         scanf(" %c", &svar);
 
         if (svar == 'd') {

@@ -2,7 +2,7 @@
 #include <string.h>
 #include "helpers.h"
 #include "main.h"
-//#include <sys/ioctl.h>
+#include <sys/ioctl.h>
 #include <unistd.h>
 
 // printning af recept
@@ -31,10 +31,9 @@ void print_recept(int tempid, char* mednavn, char* besk, int styrke, int frek) {
 }
 
 int getTerminalWidth() {
-    //struct winsize w;
-    //ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
-    //return w.ws_col;
-    return 10;
+    struct winsize w;
+    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+    return w.ws_col;
 }
 
 void textColor(char col){     
