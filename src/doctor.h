@@ -8,7 +8,7 @@ typedef struct{
 typedef struct{
     int rid;
     char medname[20];
-    int dosage;
+    float dosage;
     int frequency;
     char notes[200];
 } recept;
@@ -28,5 +28,5 @@ int medicine_callback(void *inp, int, char **, char **);
 
 int check_med(char med_input[20]);
 int check_med_max(char med_input[20]);
-void insert_recept(int medid, int dosis, int frek, char desk[250]);
+void insert_recept(int medid, float dosis, int frek, char desk[250]);
 void delete_recept(int valg);

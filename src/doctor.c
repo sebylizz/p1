@@ -41,16 +41,21 @@ void doctor(){
 
         scanf(" %c", &valg);
         if (valg == 'v') { // se eksisterende recepter
-            printf("\nName: %s | CPR: %s\n", cur.name, cur.cpr);
-            int width = getTerminalWidth();
-            char symbol = '_';
-            for (int i = 0; i < width; i++) {
-                printf("%c", symbol);
+            if (antalrecepts == 0) {
+                printf("There is no existing prescriptions prescribed to the chosen patient\n");
             }
-            for (int i = 0; i < antalrecepts; i++) {
-                print_recept(i+1, recepts[i].medname, recepts[i].notes, recepts[i].dosage, recepts[i].frequency);
+            else {
+                printf("\nName: %s | CPR: %s\n", cur.name, cur.cpr);
+                int width = getTerminalWidth();
+                char symbol = '_';
+                for (int i = 0; i < width; i++) {
+                    printf("%c", symbol);
+                }
+                for (int i = 0; i < antalrecepts; i++) {
+                    print_recept(i+1, recepts[i].medname, recepts[i].notes, recepts[i].dosage, recepts[i].frequency);
+                }
+                printf("\n");
             }
-            printf("\n");
         }
         else if (valg == 'h') { //se tidligere recepter (Slettede)
             printf("\nName: %s | CPR: %s\n", cur.name, cur.cpr);
@@ -204,7 +209,8 @@ void load_patient() {
 void medicin() {
 
     char check1, check2, check3, check7, check8, med_input[20], desk[250];
-    int dosis, frek, medid;
+    int frek, medid;
+    float dosis;
 
     do {
         // Spørge om medicin
@@ -228,10 +234,10 @@ void medicin() {
 
     here: do { // spørge om styrke, evt. tilføje checks i forhold til grænser udfra database med bestemt medicin
         printf("\nWhat dosage of %s would you like to prescribe? (in mg)\n", med_input);
-        scanf(" %d", &dosis);
+        scanf(" %f", &dosis);
 
         // Check funktion
-        printf("\nIs %d mg the correct dosage of %s you wish to prescribe? [y/n]\n", dosis, med_input);
+        printf("\nIs %.1f mg the correct dosage of %s you wish to prescribe? [y/n]\n", dosis, med_input);
         scanf(" %c", &check2);
 
     } while (check2 != 'y');
@@ -239,7 +245,7 @@ void medicin() {
     int max = check_med_max(med_input);
     if (dosis > max){
         textColor('r');
-        printf("\n%s with the dosage of %d mg is dangerous, want to proceed? [y/n]\n", med_input, dosis);
+        printf("\n%s with the dosage of %.1f mg is dangerous, want to proceed? [y/n]\n", med_input, dosis);
         textColor('w');
         scanf(" %c", &check8);
         if (check8 == 'n') {
@@ -249,10 +255,10 @@ void medicin() {
 
     //char times[frek][6];
     do { // Spørge om frekvensen
-        printf("\nHow many times a day do you wish for the patient to take %d mg %s?\n", dosis, med_input);
+        printf("\nHow many times a day do you wish for the patient to take %.1f mg %s?\n", dosis, med_input);
         scanf(" %d", &frek);
         // Check funktion
-        printf("\nIs it correct that you want the patient to take %d mg of %s %d time(s) a day? [y/n]\n", dosis, med_input, frek);
+        printf("\nIs it correct that you want the patient to take %.1f mg of %s %d time(s) a day? [y/n]\n", dosis, med_input, frek);
         scanf(" %c", &check3);
 
     } while (check3 != 'y');
@@ -280,9 +286,9 @@ int check_med(char med_input[20]){
     return returid;
 }
 
-void insert_recept(int medid, int dosis, int frek, char desk[250]){
+void insert_recept(int medid, float dosis, int frek, char desk[250]){
     char sql[250];
-    sprintf(sql, "INSERT INTO patmed(cpr, id, dosage, frequency, notes) VALUES('%s', %d, %d, %d, '%s')", cur.cpr, medid, dosis, frek, desk);
+    sprintf(sql, "INSERT INTO patmed(cpr, id, dosage, frequency, notes) VALUES('%s', %d, %f, %d, '%s')", cur.cpr, medid, dosis, frek, desk);
     sqlite3_exec(db, sql, NULL, 0, NULL);
 
     refresh_recepts();
@@ -347,7 +353,7 @@ int recept_callback(void *unused, int argc, char **argv, char **azColName){
         recepts = realloc(recepts, (antalrecepts + 1) * sizeof(recept));
     }
     strcpy(recepts[antalrecepts].medname, strdup(argv[0]));
-    recepts[antalrecepts].dosage = atoi(argv[1]);
+    recepts[antalrecepts].dosage = atof(argv[1]);
     recepts[antalrecepts].frequency = atoi(argv[2]);
     if(argv[3] != NULL){strcpy(recepts[antalrecepts].notes, (strdup(argv[3])));}
     recepts[antalrecepts].rid = atoi(argv[4]);
