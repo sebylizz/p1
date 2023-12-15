@@ -18,6 +18,8 @@ void load_patient();
 void doctor();
 void nurse();
 void dbinit();
+void refresh_recepts();
+void refresh_delrecepts();
 
 int person_callback(void *, int, char **, char **);
 int recept_callback(void *, int, char **, char **);

@@ -27,13 +27,7 @@ void dbinit(){
 
 void doctor(){
 
-    int rc = sqlite3_open(sti, &db);
-
-    if (rc != SQLITE_OK) {
-        fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(db));
-        sqlite3_close(db);
-        exit(EXIT_SUCCESS);
-    }
+    dbinit();
 
     load_patient();
 
@@ -127,13 +121,7 @@ void doctor(){
 
 void nurse(){
 
-    int rc = sqlite3_open(sti, &db);
-
-    if (rc != SQLITE_OK) {
-        fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(db));
-        sqlite3_close(db);
-        exit(EXIT_SUCCESS);
-    }
+    dbinit();
 
     load_patient();
 
@@ -206,13 +194,9 @@ void load_patient() {
 
     } while (svar != 'y' || strcmp(cur.cpr, "NULL") == 0);
 
-    antalrecepts = 0;
-    sprintf(sql, "SELECT medicine.medicine, patmed.dosage, patmed.frequency, patmed.notes, rid FROM patmed JOIN medicine ON medicine.id = patmed.id WHERE patmed.cpr = '%s'", cpr);
-    sqlite3_exec(db, sql, recept_callback, 0, NULL);
+    refresh_recepts();
 
-    antaldelrecepts = 0;
-    sprintf(sql, "SELECT medicine.medicine, delrecepts.dosage, delrecepts.frequency, delrecepts.notes, rid FROM delrecepts JOIN medicine ON medicine.id = delrecepts.id WHERE delrecepts.cpr = '%s'", cpr);
-    sqlite3_exec(db, sql, delrecepts_callback, 0, NULL);
+    refresh_delrecepts();
 
     printf("\nChosen patient is: %s\n", cur.name);   
 }
@@ -301,11 +285,7 @@ void insert_recept(int medid, int dosis, int frek, char desk[250]){
     sprintf(sql, "INSERT INTO patmed(cpr, id, dosage, frequency, notes) VALUES('%s', %d, %d, %d, '%s')", cur.cpr, medid, dosis, frek, desk);
     sqlite3_exec(db, sql, NULL, 0, NULL);
 
-    free(recepts);
-    recepts = NULL;
-    antalrecepts = 0;
-    sprintf(sql, "SELECT medicine.medicine, patmed.dosage, patmed.frequency, patmed.notes, rid FROM patmed JOIN medicine ON medicine.id = patmed.id WHERE patmed.cpr = '%s'", cur.cpr);
-    sqlite3_exec(db, sql, recept_callback, 0, NULL);
+    refresh_recepts();
 }
 
 void delete_recept(int valg){
@@ -317,11 +297,8 @@ void delete_recept(int valg){
     sprintf(sql, "DELETE FROM patmed WHERE rid = %d", recepts[valg].rid);
     sqlite3_exec(db, sql, NULL, 0, NULL);
 
-    free(recepts);
-    recepts = NULL;
-    antalrecepts = 0;
-    sprintf(sql, "SELECT medicine.medicine, patmed.dosage, patmed.frequency, patmed.notes, rid FROM patmed JOIN medicine ON medicine.id = patmed.id WHERE patmed.cpr = '%s'", cur.cpr);
-    sqlite3_exec(db, sql, recept_callback, 0, NULL);
+    refresh_recepts();
+    refresh_delrecepts();
 }
 
 int check_med_max(char med_input[20]){ //shit code here
@@ -332,6 +309,24 @@ int check_med_max(char med_input[20]){ //shit code here
     sqlite3_exec(db, sql, medicine_callback, &medid, NULL);
 
     return medid;
+}
+
+void refresh_recepts(){
+    char sql[250];
+    free(recepts);
+    recepts = NULL;
+    antalrecepts = 0;
+    sprintf(sql, "SELECT medicine.medicine, patmed.dosage, patmed.frequency, patmed.notes, rid FROM patmed JOIN medicine ON medicine.id = patmed.id WHERE patmed.cpr = '%s'", cur.cpr);
+    sqlite3_exec(db, sql, recept_callback, 0, NULL);
+}
+
+void refresh_delrecepts(){
+    char sql[250];
+    free(delrecepts);
+    delrecepts = NULL;
+    antaldelrecepts = 0;
+    sprintf(sql, "SELECT medicine.medicine, delrecepts.dosage, delrecepts.frequency, delrecepts.notes, rid FROM delrecepts JOIN medicine ON medicine.id = delrecepts.id WHERE delrecepts.cpr = '%s'", cur.cpr);
+    sqlite3_exec(db, sql, delrecepts_callback, 0, NULL);
 }
 
 int person_callback(void *unused, int argc, char **argv, char **azColName) {
