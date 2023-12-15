@@ -46,11 +46,7 @@ void doctor(){
             }
             else {
                 printf("\nName: %s | CPR: %s\n", cur.name, cur.cpr);
-                int width = getTerminalWidth();
-                char symbol = '_';
-                for (int i = 0; i < width; i++) {
-                    printf("%c", symbol);
-                }
+                printline();
                 for (int i = 0; i < antalrecepts; i++) {
                     print_recept(i+1, recepts[i].medname, recepts[i].notes, recepts[i].dosage, recepts[i].frequency);
                 }
@@ -59,11 +55,7 @@ void doctor(){
         }
         else if (valg == 'h') { //se tidligere recepter (Slettede)
             printf("\nName: %s | CPR: %s\n", cur.name, cur.cpr);
-            int width = getTerminalWidth();
-            char symbol = '_';
-            for (int i = 0; i < width; i++) {
-                printf("%c", symbol);
-            }
+            printline();
             for (int i = 0; i < antaldelrecepts; i++) {
                 print_recept(i+1, delrecepts[i].medname, delrecepts[i].notes, delrecepts[i].dosage, delrecepts[i].frequency);
             }
@@ -72,11 +64,7 @@ void doctor(){
         }
         else if (valg == 'c') { //lave en ny recept
             medicin();
-            int width = getTerminalWidth();
-            char symbol = '-';
-            for (int i = 0; i < width; i++) {
-                printf("%c", symbol);
-            }
+            printline();
             print_recept(antalrecepts, recepts[antalrecepts-1].medname, recepts[antalrecepts-1].notes, recepts[antalrecepts-1].dosage, recepts[antalrecepts-1].frequency);
             printf("\n");
         }
@@ -87,11 +75,7 @@ void doctor(){
             }
             else {
                 printf("\nName: %s | CPR: %s\n", cur.name, cur.cpr);
-                int width = getTerminalWidth();
-                char symbol = '_';
-                for (int i = 0; i < width; i++) {
-                    printf("%c", symbol);
-                }
+                printline();
                 for (int i = 0; i < antalrecepts; i++) {
                     print_recept(i+1, recepts[i].medname, recepts[i].notes, recepts[i].dosage, recepts[i].frequency);
                     printf("\n");

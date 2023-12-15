@@ -55,3 +55,11 @@ void textColor(char col){
             break;
     }
 }
+
+void printline(){
+    int width = getTerminalWidth();
+    char symbol = '-';
+    for (int i = 0; i < width; i++) {
+        printf("%c", symbol);
+    }
+}
