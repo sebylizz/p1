@@ -291,7 +291,7 @@ void delete_recept(int valg){
     refresh_delrecepts();
 }
 
-int check_med_max(char med_input[20]){ //shit code here
+int check_med_max(char med_input[20]){
     char sql[250];
 
     int medid = 0;
